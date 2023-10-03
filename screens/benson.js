@@ -24,9 +24,14 @@ export default function Benson() {
                     </View>
                 </Pressable>
                 <View style={styles.middleIconContainer}>
+                    <View style={styles.leftLine}>
+                    </View>
                     <Image
                         source={require('../assets/BroncoBytesIcon.png')}
                         style={styles.icon} />
+                    <View style={styles.rightLine}>
+
+                    </View>
                 </View>
                 <Pressable style={styles.reviewButtonContainer}
                     onPress={() => navigation.navigate('Leave Review')}>
@@ -68,8 +73,9 @@ const styles = StyleSheet.create({
     },
     middleIconContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        flexDirection: 'row',
     },
     reviewButtonContainer: {
         flex: 1,
@@ -82,7 +88,17 @@ const styles = StyleSheet.create({
         color: '#B30738',
     },
     icon: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
+    },
+    leftLine: {
+        borderWidth: 2,
+        borderColor: '#B30738',
+        height: 36,
+    },
+    rightLine: {
+        borderWidth: 2,
+        borderColor: '#B30738',
+        height: 36,
     },
 });
