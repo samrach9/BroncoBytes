@@ -20,25 +20,25 @@ export default function Benson() {
                             <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
                         </View>
                         <View style={styles.foodImageContainer}>
-                            <Image source={require('./assets/tempFoodImage.png')}
+                            <Image source={require('../assets/tempFoodImage.png')}
                                 style={styles.foodImage} />
                         </View>
                         <View style={styles.starContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
                             <Image
-                                source={require('./assets/Star.png')
+                                source={require('../assets/Star.png')
                                 } />
                             <Image
-                                source={require('./assets/Star.png')
+                                source={require('../assets/Star.png')
                                 } />
                             <Image
-                                source={require('./assets/Star.png')
+                                source={require('../assets/Star.png')
                                 } />
                             <Image
-                                source={require('./assets/Star.png')
+                                source={require('../assets/Star.png')
                                 } />
                             <Image
-                                source={require('./assets/EmptyStar.png')
+                                source={require('../assets/EmptyStar.png')
                                 } />
                         </View>
                         <View style={styles.notesContainer}>
