@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, StatusBar, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Benson() {
 
@@ -14,41 +13,148 @@ export default function Benson() {
                 <View style={styles.topBar}>
                     <Text style={styles.topBarText}>Benson</Text>
                 </View>
-                <View style={styles.content}>
-                    <View style={styles.ratingCard}>
-                        <View style={styles.cardTitleContainer}>
-                            <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
-                        </View>
-                        <View style={styles.foodImageContainer}>
-                            <Image source={require('../assets/tempFoodImage.png')}
-                                style={styles.foodImage} />
-                        </View>
-                        <View style={styles.starContainer}>
-                            <Text style={styles.ratingText}>Rating: </Text>
-                            <Image
-                                source={require('../assets/Star.png')
-                                } />
-                            <Image
-                                source={require('../assets/Star.png')
-                                } />
-                            <Image
-                                source={require('../assets/Star.png')
-                                } />
-                            <Image
-                                source={require('../assets/Star.png')
-                                } />
-                            <Image
-                                source={require('../assets/EmptyStar.png')
-                                } />
-                        </View>
-                        <View style={styles.notesContainer}>
-                            <Text style={styles.notesText}>Notes: blah blahbobhl ablhbaabl hablhb ahl ablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahl</Text>
-                        </View>
-                        <View style={styles.submittedContainer}>
-                            <Text style={styles.submittedText}>- Submitted By: Today, 11:15AM -</Text>
+                <ScrollView>
+                    <View style={styles.content}>
+                        <View style={styles.ratingCard}>
+                            <View style={styles.cardTitleContainer}>
+                                <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
+                            </View>
+                            <View style={styles.foodImageContainer}>
+                                <Image source={require('../assets/tempFoodImage.png')}
+                                    style={styles.foodImage} />
+                            </View>
+                            <View style={styles.starContainer}>
+                                <Text style={styles.ratingText}>Rating: </Text>
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/EmptyStar.png')
+                                    } />
+                            </View>
+                            <View style={styles.notesContainer}>
+                                <Text style={styles.notesText}>Notes: blah blahbobhl ablhbaabl hablhb ahl ablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahl</Text>
+                            </View>
+                            <View style={styles.submittedContainer}>
+                                <Text style={styles.submittedText}>- Submitted By: Today, 11:15AM -</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
+                    <View style={styles.content}>
+                        <View style={styles.ratingCard}>
+                            <View style={styles.cardTitleContainer}>
+                                <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
+                            </View>
+                            <View style={styles.foodImageContainer}>
+                                <Image source={require('../assets/tempFoodImage.png')}
+                                    style={styles.foodImage} />
+                            </View>
+                            <View style={styles.starContainer}>
+                                <Text style={styles.ratingText}>Rating: </Text>
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/EmptyStar.png')
+                                    } />
+                            </View>
+                            <View style={styles.notesContainer}>
+                                <Text style={styles.notesText}>Notes: blah blahbobhl ablhbaabl hablhb ahl ablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahl</Text>
+                            </View>
+                            <View style={styles.submittedContainer}>
+                                <Text style={styles.submittedText}>- Submitted By: Today, 11:15AM -</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.content}>
+                        <View style={styles.ratingCard}>
+                            <View style={styles.cardTitleContainer}>
+                                <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
+                            </View>
+                            <View style={styles.foodImageContainer}>
+                                <Image source={require('../assets/tempFoodImage.png')}
+                                    style={styles.foodImage} />
+                            </View>
+                            <View style={styles.starContainer}>
+                                <Text style={styles.ratingText}>Rating: </Text>
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/EmptyStar.png')
+                                    } />
+                            </View>
+                            <View style={styles.notesContainer}>
+                                <Text style={styles.notesText}>Notes: blah blahbobhl ablhbaabl hablhb ahl ablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahl</Text>
+                            </View>
+                            <View style={styles.submittedContainer}>
+                                <Text style={styles.submittedText}>- Submitted By: Today, 11:15AM -</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.content}>
+                        <View style={styles.ratingCard}>
+                            <View style={styles.cardTitleContainer}>
+                                <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
+                            </View>
+                            <View style={styles.foodImageContainer}>
+                                <Image source={require('../assets/tempFoodImage.png')}
+                                    style={styles.foodImage} />
+                            </View>
+                            <View style={styles.starContainer}>
+                                <Text style={styles.ratingText}>Rating: </Text>
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/Star.png')
+                                    } />
+                                <Image
+                                    source={require('../assets/EmptyStar.png')
+                                    } />
+                            </View>
+                            <View style={styles.notesContainer}>
+                                <Text style={styles.notesText}>Notes: blah blahbobhl ablhbaabl hablhb ahl ablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahl</Text>
+                            </View>
+                            <View style={styles.submittedContainer}>
+                                <Text style={styles.submittedText}>- Submitted By: Today, 11:15AM -</Text>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
             <View style={styles.footer}>
                 <Pressable style={styles.backButtonContainer}
@@ -137,15 +243,16 @@ const styles = StyleSheet.create({
     },
     content: {
         alignItems: 'center',
-        borderWidth: 2,
-        borderColor: 'black',
     },
     ratingCard: {
         height: 400,
         width: 300,
         backgroundColor: 'white',
         margin: 50,
+        marginBottom: 0,
         padding: 10,
+        borderWidth: 2,
+        borderColor: 'black',
     },
     foodImageContainer: {
         borderColor: 'black',
