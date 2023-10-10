@@ -1,0 +1,8 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "BroncoBytesBackend"
+resolve_s3 = true
+s3_prefix = "BroncoBytesBackend"
+region = "us-west-2"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
