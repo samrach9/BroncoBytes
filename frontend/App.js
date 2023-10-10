@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { View, useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import useFonts from './hooks/useFonts';
@@ -76,16 +77,18 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='LoadingScreen' component={LoadingScreen} />
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='Choose Hall' component={ChooseHall} />
-        <Stack.Screen name='Benson' component={Benson} />
-        <Stack.Screen name='Fresh Bytes' component={FreshBytes} />
-        <Stack.Screen name='All Reviews' component={AllReviews} />
-        <Stack.Screen name='Leave Review' component={LeaveReview} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={{ height: '100%', width: '100%' }} onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='LoadingScreen' component={LoadingScreen} />
+          <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='Choose Hall' component={ChooseHall} />
+          <Stack.Screen name='Benson' component={Benson} />
+          <Stack.Screen name='Fresh Bytes' component={FreshBytes} />
+          <Stack.Screen name='All Reviews' component={AllReviews} />
+          <Stack.Screen name='Leave Review' component={LeaveReview} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </View>
   );
 };
