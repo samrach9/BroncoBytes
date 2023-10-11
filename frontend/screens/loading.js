@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 
 export default function Loading() {
@@ -8,21 +8,12 @@ export default function Loading() {
 
     return (
         <View style={styles.container}>
-
-            <Pressable
-                onPress={() => navigation.navigate('Home')}
-                style={({ pressed }) => {
-                    return {
-                        opacity: pressed ? 0.65 : 1,
-                    }
-                }}>
-
-                <Image
-                    source={require('../assets/BroncoBytesIcon.png')}
-                    style={styles.icon} />
-            </Pressable>
+            <Image
+                source={require('../assets/BroncoBytesIcon.png')}
+                style={styles.icon} />
 
             <Text style={styles.loadText}>Bronco Bytes</Text>
+            <ActivityIndicator style={{ padding: 10 }} size="large" color="#B30738" />
         </View>
 
     );
