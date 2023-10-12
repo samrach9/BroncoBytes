@@ -2,3 +2,6 @@ node_modules
 
 # expo build files
 .expo
+
+# ennvironment variables
+.env

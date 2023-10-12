@@ -25,6 +25,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "This app accesses photos to let you share them as part of your review.",
+          "cameraPermission": "This app accesses the camera to let you take pictures to share as part of your review."
+        }
+      ]
+    ]
   }
 }
