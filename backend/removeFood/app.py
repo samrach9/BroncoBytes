@@ -8,15 +8,12 @@ def lambda_handler(event, context):
     print(event)
 
     # Static Variables
-    if os.environ['ENV'] == 'local':
-        db_client = boto3.client('dynamodb', endpoint_url=os.environ['ENDPOINT_URL'])
-    else:
-        db_client = boto3.client('dynamodb')
+    db_client = boto3.client('dynamodb')
     DYNAMODB_TABLE = os.environ['DYNAMODB_TABLE']
    
     body = json.loads(event['body'])
 
-    # Create item object
+    # Remove item object
     foodId = body['foodId']
     response = db_client.delete_item(
         TableName=DYNAMODB_TABLE,

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import { FoodContext } from '../App';
+import { UserContext } from '../App';
 import { Rating } from 'react-native-ratings';
 import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
@@ -18,7 +19,9 @@ export default function LeaveReview() {
     const [cameraStatus, cameraRequestPermissions] = ImagePicker.useCameraPermissions();
 
     const { allFood, setAllFood } = useContext(FoodContext);
-    const [userId, setUserId] = useState('0');
+    const { user, setUser } = useContext(UserContext);
+    const userId = user.userId;
+    console.log(userId);
     const [foodId, setFoodId] = useState(null);
     const [rating, setRating] = useState(2.5);
     const [title, setTitle] = useState("");
@@ -77,7 +80,7 @@ export default function LeaveReview() {
         
         let imageURLs = [];
 
-        navigation.navigate('LoadingScreen')
+        navigation.navigate('Loading')
 
         await Promise.all(imageURIs.map(async (image, index) => {
             try {
