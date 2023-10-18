@@ -12,6 +12,7 @@ export function TopBar(props) {
 const styles = StyleSheet.create({
     topBar: {
         backgroundColor: 'white',
+        width: "100%",
     },
     topBarText: {
         color: '#B30738',
