@@ -16,7 +16,7 @@ export default function ChooseHall() {
                 </View>
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Benson')}>
+                        onPress={() => navigation.navigate('Benson Restaurants')}>
                         <Text style={styles.buttonText}>Benson</Text>
                     </Pressable>
 

@@ -15,6 +15,7 @@ import Benson from './screens/benson';
 import FreshBytes from './screens/freshbytes';
 import AllReviews from './screens/allReviews';
 import LeaveReview from './screens/leaveReview';
+import BensonRestaurants from './screens/bensonRestaurants';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -63,6 +64,7 @@ export default function App() {
             <Stack.Screen name='Fresh Bytes' component={FreshBytes} />
             <Stack.Screen name='All Reviews' component={AllReviews} />
             <Stack.Screen name='Leave Review' component={LeaveReview} />
+            <Stack.Screen name='Benson Restaurants' component={BensonRestaurants} />
           </Stack.Navigator>
         </NavigationContainer>
       </FoodContext.Provider>
