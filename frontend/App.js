@@ -16,6 +16,7 @@ import Benson from './screens/benson';
 import FreshBytes from './screens/freshbytes';
 import AllReviews from './screens/allReviews';
 import LeaveReview from './screens/leaveReview';
+import BensonRestaurants from './screens/bensonRestaurants';
 import Login from './screens/login';
 import SignUp from './screens/signup';
 
@@ -80,6 +81,7 @@ export default function App() {
             <Stack.Screen name='Fresh Bytes' component={FreshBytes} />
             <Stack.Screen name='All Reviews' component={AllReviews} />
             <Stack.Screen name='Leave Review' component={LeaveReview} />
+            <Stack.Screen name='Benson Restaurants' component={BensonRestaurants} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='Sign Up' component={SignUp} />
             <Stack.Screen name='Navigation' component={Navigation} />

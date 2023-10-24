@@ -236,5 +236,5 @@ const styles = StyleSheet.create({
     notesText: {
         fontFamily: 'Bungee',
         fontSize: 10
-    }
+    },
 });
