@@ -10,13 +10,14 @@ export function Footer(props) {
                     <Text style={styles.buttonText}>{props.leftButtonText}</Text>
                 </View>
             </Pressable>
-            <View style={styles.middleIconContainer}>
-                <View style={styles.leftLine}/>
+            <Pressable style={styles.middleIconContainer}
+                onPress={props.iconButtonPress}>
+                <View style={styles.leftLine} />
                 <Image
                     source={require('../assets/BroncoBytesIcon.png')}
                     style={styles.icon} />
-                <View style={styles.rightLine}/>
-            </View>
+                <View style={styles.rightLine} />
+            </Pressable>
             <Pressable style={styles.rightButtonContainer}
                 onPress={props.rightButtonPress}>
                 <View>

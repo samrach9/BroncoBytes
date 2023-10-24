@@ -2,7 +2,7 @@ import os
 import json
 import boto3
 
-# removeReview
+# removeUser
 def lambda_handler(event, context):
     print('received event:')
     print(event)
@@ -14,11 +14,11 @@ def lambda_handler(event, context):
     body = json.loads(event['body'])
 
     # Remove item object
-    reviewId = body['reviewId']
+    userId = body['userId']
     response = db_client.delete_item(
         TableName=DYNAMODB_TABLE,
         Key={
-            'reviewId':{'S': reviewId}
+            'userId':{'S': userId}
         },
     )
     

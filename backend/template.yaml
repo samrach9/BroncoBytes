@@ -209,6 +209,120 @@ Resources:
       Policies:
       - AmazonDynamoDBFullAccess
 
+  getUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: getUser/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - arm64
+      Environment:
+        Variables:
+          ENV: prod 
+          ENDPOINT_URL: none
+          DYNAMODB_TABLE: !Ref userDynamoDB
+      Events:
+        getUser:
+          Type: Api
+          Properties:
+            Path: /getUser
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+        getUserByEmail:
+          Type: Api
+          Properties:
+            Path: /getUserByEmail
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+        getUserByUsername:
+          Type: Api
+          Properties:
+            Path: /getUserByUsername
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+        login:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+      Policies:
+      - AmazonDynamoDBFullAccess
+
+  putUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: putUser/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - arm64
+      Environment:
+        Variables:
+          ENV: prod 
+          ENDPOINT_URL: none
+          DYNAMODB_TABLE: !Ref userDynamoDB
+      Events:
+        putUser:
+          Type: Api
+          Properties:
+            Path: /putUser
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+        createUser:
+          Type: Api
+          Properties:
+            Path: /createUser
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+        updateUser:
+          Type: Api
+          Properties:
+            Path: /updateUser
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+        signup:
+          Type: Api
+          Properties:
+            Path: /signup
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+      Policies:
+      - AmazonDynamoDBFullAccess
+    
+  removeUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: removeUser/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - arm64
+      Environment:
+        Variables:
+          ENV: prod 
+          ENDPOINT_URL: none
+          DYNAMODB_TABLE: !Ref userDynamoDB
+      Events:
+        removeUser:
+          Type: Api
+          Properties:
+            Path: /removeUser
+            Method: POST
+            RestApiId:
+              Ref: foodReviewApi
+      Policies:
+      - AmazonDynamoDBFullAccess
+
   updateFoodReviewsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -300,6 +414,50 @@ Resources:
       KeySchema:
         - AttributeName: foodId 
           KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  userDynamoDB:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: userId 
+          AttributeType: S
+        - AttributeName: email 
+          AttributeType: S
+        - AttributeName: username
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId 
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: emailIndex
+          KeySchema:
+          - AttributeName: email 
+            KeyType: HASH
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+          Projection:
+            NonKeyAttributes:
+            - username
+            - password
+            - dateCreated
+            ProjectionType: INCLUDE
+        - IndexName: usernameIndex
+          KeySchema:
+          - AttributeName: username 
+            KeyType: HASH
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+          Projection:
+            NonKeyAttributes:
+            - email
+            - password
+            - dateCreated
+            ProjectionType: INCLUDE
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
