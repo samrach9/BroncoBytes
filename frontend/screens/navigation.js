@@ -5,7 +5,7 @@ import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
 
-export default function FreshBytes() {
+export default function Navigation() {
 
     const navigation = useNavigation();
     const {allFood, setAllFood} = useContext(FoodContext);
@@ -13,7 +13,7 @@ export default function FreshBytes() {
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <TopBar text={"Fresh Bytes"}/>
+                <TopBar text={"Navigation"}/>
                 <View style={styles.content}>
                     <Text>Content</Text>
                 </View>
@@ -21,7 +21,6 @@ export default function FreshBytes() {
             <Footer
                 leftButtonText={"Back"}
                 leftButtonPress={() => navigation.navigate('Choose Hall')}
-                iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Review"}
                 rightButtonPress={() => navigation.navigate('Leave Review')}
             />

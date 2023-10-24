@@ -10,6 +10,7 @@ import getAllFood from './api/getAllFood';
 //Navigation screens
 import Loading from './screens/loading';
 import Home from './screens/home';
+import Navigation from './screens/navigation';
 import ChooseHall from './screens/chooseHall';
 import Benson from './screens/benson';
 import FreshBytes from './screens/freshbytes';
@@ -81,6 +82,7 @@ export default function App() {
             <Stack.Screen name='Leave Review' component={LeaveReview} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='Sign Up' component={SignUp} />
+            <Stack.Screen name='Navigation' component={Navigation} />
           </Stack.Navigator>
         </NavigationContainer>
       </FoodContext.Provider>

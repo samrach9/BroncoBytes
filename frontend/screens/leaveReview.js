@@ -163,7 +163,8 @@ export default function LeaveReview() {
             </KeyboardAvoidingView>
             <Footer
                 leftButtonText={"Back"}
-                leftButtonPress={() => navigation.navigate('Home')}
+                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Submit"}
                 rightButtonPress={() => submitReview()}
             />
