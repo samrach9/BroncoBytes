@@ -78,6 +78,7 @@ export default function BensonRestaurants() {
             <Footer
                 leftButtonText={"Back"}
                 leftButtonPress={() => navigation.navigate('Choose Hall')}
+                iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Review"}
                 rightButtonPress={() => navigation.navigate('Leave Review')}
             />
