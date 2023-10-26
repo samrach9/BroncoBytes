@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Footer } from '../components/footer';
 
 export default function ChooseHall() {
 
@@ -30,7 +31,15 @@ export default function ChooseHall() {
                     <Text style={styles.allReviewsText}>All Reviews</Text>
                 </Pressable>
             </View>
+            <Footer
+                leftButtonText={"Back"}
+                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                iconButtonPress={() => navigation.navigate('Navigation')}
+                rightButtonText={"Review"}
+                rightButtonPress={() => navigation.navigate('Leave Review')}
+            />
         </View>
+        
     )
 }
 
@@ -42,6 +51,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     contentContainer: {
+        flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
     },
