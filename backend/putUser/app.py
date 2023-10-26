@@ -77,6 +77,8 @@ def lambda_handler(event, context):
         if (item['username']['S'] != body['username'] and username_taken(body['username'], db_client, DYNAMODB_TABLE)):
             return username_already_exists_response
         item['username'] = {'S': body['username']}
+        if 'admin' in body:
+            item['admin'] = {'BOOL': body['admin']}
     else:
         if email_taken(body['email'], db_client, DYNAMODB_TABLE):
             return email_already_exists_response
@@ -90,6 +92,7 @@ def lambda_handler(event, context):
             'email': {'S': body['email']},
             'username': {'S': body['username']},
             'password': {'S': body['password']},
+            'admin': {'BOOL': False}
         }
 
     # Put object in DB
