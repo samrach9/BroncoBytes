@@ -27,8 +27,8 @@ export default function ChooseHall() {
                     </Pressable>
                 </View>
                 <Pressable style={styles.allReviewsButton}
-                    onPress={() => navigation.navigate('All Reviews')}>
-                    <Text style={styles.allReviewsText}>All Reviews</Text>
+                    onPress={() => navigation.navigate('Friends')}>
+                    <Text style={styles.allReviewsText}>Friends</Text>
                 </Pressable>
             </View>
             <Footer

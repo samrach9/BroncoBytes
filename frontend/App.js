@@ -19,6 +19,7 @@ import LeaveReview from './screens/leaveReview';
 import BensonRestaurants from './screens/bensonRestaurants';
 import Login from './screens/login';
 import SignUp from './screens/signup';
+import Friends from './screens/friends';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -79,6 +80,7 @@ export default function App() {
             <Stack.Screen name='Choose Hall' component={ChooseHall} />
             <Stack.Screen name='Benson' component={Benson} />
             <Stack.Screen name='Fresh Bytes' component={FreshBytes} />
+            <Stack.Screen name='Friends' component={Friends} />
             <Stack.Screen name='All Reviews' component={AllReviews} />
             <Stack.Screen name='Leave Review' component={LeaveReview} />
             <Stack.Screen name='Benson Restaurants' component={BensonRestaurants} />
