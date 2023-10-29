@@ -9,7 +9,7 @@ export default function Loading() {
     return (
         <View style={styles.container}>
             <Image
-                source={require('../assets/BroncoBytesIcon.png')}
+                source={require('../assets/LogoRed.png')}
                 style={styles.icon} />
 
             <Text style={styles.loadText}>Bronco Bytes</Text>

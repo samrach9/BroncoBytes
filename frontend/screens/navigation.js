@@ -18,7 +18,7 @@ export default function Navigation() {
                 <View style={styles.chooseHallContainer}>
                     <Text style={styles.chooseHallText}>Bronco Bytes</Text>
                     <Image
-                        source={require('../assets/BroncoBytesIcon.png')}
+                        source={require('../assets/LogoWhite.png')}
                         style={styles.icon} />
                 </View>
                 <View style={styles.buttonContainer}>

@@ -14,7 +14,7 @@ export function Footer(props) {
                 onPress={props.iconButtonPress}>
                 <View style={styles.leftLine} />
                 <Image
-                    source={require('../assets/BroncoBytesIcon.png')}
+                    source={require('../assets/LogoRed.png')}
                     style={styles.icon} />
                 <View style={styles.rightLine} />
             </Pressable>
