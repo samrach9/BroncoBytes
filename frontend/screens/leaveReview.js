@@ -11,7 +11,7 @@ import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
 
-export default function LeaveReview() {
+export default function LeaveReview({route}) {
 
     const navigation = useNavigation();
 
@@ -22,7 +22,7 @@ export default function LeaveReview() {
     const { user, setUser } = useContext(UserContext);
     const userId = user.userId;
     console.log(userId);
-    const [foodId, setFoodId] = useState(null);
+    const [foodId, setFoodId] = useState("foodId" in route.params ? route.params.foodId : null);
     const [rating, setRating] = useState(2.5);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -121,6 +121,7 @@ export default function LeaveReview() {
             <TopBar text={"Leave a Review"} />
             <KeyboardAvoidingView style={styles.contentContainer} behavior='height'>
                 <RNPickerSelect
+                    value={foodId}
                     onValueChange={(value) => setFoodId(value)}
                     items={allFood.map(food => ({ label: food.name, value: food.foodId }))}
                     style={pickerSelectStyles}
@@ -163,7 +164,7 @@ export default function LeaveReview() {
             </KeyboardAvoidingView>
             <Footer
                 leftButtonText={"Back"}
-                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                leftButtonPress={() => navigation.pop()}
                 iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Submit"}
                 rightButtonPress={() => submitReview()}

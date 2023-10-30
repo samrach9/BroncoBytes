@@ -1,51 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Button } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { FoodContext } from '../App';
+import FoodCard from '../components/foodCard';
 
 export default function Home() {
 
     const navigation = useNavigation();
+    const { allFood, setAllFood } = useContext(FoodContext);
 
     return (
         <View style={styles.container}>
             <View style={styles.biteOTD}>
                 <Text style={styles.biteText}>Bite of the Day</Text>
             </View>
-            <View style={styles.foodCardContainer}>
-                <View style={styles.ratingCard}>
-                    <View style={styles.cardTitleContainer}>
-                        <Text style={styles.cardTitle}>Benson: Poke Bowl</Text>
-                    </View>
-                    <View style={styles.foodImageContainer}>
-                        <Image source={require('../assets/tempFoodImage.png')}
-                            style={styles.foodImage} />
-                    </View>
-                    <View style={styles.starContainer}>
-                        <Text style={styles.ratingText}>Rating: </Text>
-                        <Image
-                            source={require('../assets/Star.png')
-                            } />
-                        <Image
-                            source={require('../assets/Star.png')
-                            } />
-                        <Image
-                            source={require('../assets/Star.png')
-                            } />
-                        <Image
-                            source={require('../assets/Star.png')
-                            } />
-                        <Image
-                            source={require('../assets/EmptyStar.png')
-                            } />
-                    </View>
-                    <View style={styles.notesContainer}>
-                        <Text style={styles.notesText}>Notes: blah blahbobhl ablhbaabl hablhb ahl ablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahlablhbaabl hablhb ahl</Text>
-                    </View>
-                    <View style={styles.submittedContainer}>
-                        <Text style={styles.submittedText}>- Submitted By: Today, 11:15AM -</Text>
-                    </View>
-                </View>
-            </View>
+            
+            <FoodCard key={allFood[0].foodId} food={allFood[0]} />
+
             <View style={styles.buttonsContainer}>
 
                 <Pressable style={styles.button}

@@ -22,13 +22,13 @@ export default function ChooseHall() {
                     </Pressable>
 
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Fresh Bytes')}>
+                        onPress={() => navigation.navigate('Foods Page', {restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes"})}>
                         <Text style={styles.buttonText}>Fresh Bytes</Text>
                     </Pressable>
                 </View>
                 <Pressable style={styles.allReviewsButton}
-                    onPress={() => navigation.navigate('Friends')}>
-                    <Text style={styles.allReviewsText}>Friends</Text>
+                    onPress={() => navigation.navigate('Foods Page', {restaurantName: "All Reviews"})}>
+                    <Text style={styles.allReviewsText}>All Reviews</Text>
                 </Pressable>
             </View>
             <Footer

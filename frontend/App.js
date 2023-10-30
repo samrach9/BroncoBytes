@@ -12,14 +12,13 @@ import Loading from './screens/loading';
 import Home from './screens/home';
 import Navigation from './screens/navigation';
 import ChooseHall from './screens/chooseHall';
-import Benson from './screens/benson';
-import FreshBytes from './screens/freshbytes';
-import AllReviews from './screens/allReviews';
 import LeaveReview from './screens/leaveReview';
 import BensonRestaurants from './screens/bensonRestaurants';
 import Login from './screens/login';
 import SignUp from './screens/signup';
 import Friends from './screens/friends';
+import FoodsPage from './screens/FoodsPage';
+import ReviewsPage from './screens/ReviewsPage';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -78,15 +77,14 @@ export default function App() {
             <Stack.Screen name='Loading' component={Loading} />
             <Stack.Screen name='Home' component={Home} />
             <Stack.Screen name='Choose Hall' component={ChooseHall} />
-            <Stack.Screen name='Benson' component={Benson} />
-            <Stack.Screen name='Fresh Bytes' component={FreshBytes} />
             <Stack.Screen name='Friends' component={Friends} />
-            <Stack.Screen name='All Reviews' component={AllReviews} />
             <Stack.Screen name='Leave Review' component={LeaveReview} />
             <Stack.Screen name='Benson Restaurants' component={BensonRestaurants} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='Sign Up' component={SignUp} />
             <Stack.Screen name='Navigation' component={Navigation} />
+            <Stack.Screen name='Foods Page' component={FoodsPage} />
+            <Stack.Screen name='Reviews Page' component={ReviewsPage} />
           </Stack.Navigator>
         </NavigationContainer>
       </FoodContext.Provider>

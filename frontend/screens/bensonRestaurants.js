@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Image, Pressable, StatusBar, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { FoodContext } from '../App';
 import { Footer } from '../components/footer';
 import { TopBar } from '../components/topBar';
+import { bensonRestaurants } from '../enum/bensonRestaurants';
 
 export default function BensonRestaurants() {
 
@@ -17,61 +17,16 @@ export default function BensonRestaurants() {
                 <TopBar text={"Benson"}/>
                 <ScrollView>
                     <View style={styles.buttonContainer}>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>Mission Bakery</Text>
-                        </Pressable>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>La Parilla</Text>
-                        </Pressable>
-
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>The Spice Market</Text>
-                        </Pressable>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>Trattoria</Text>
-                        </Pressable>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>The Global Grill</Text>
-                        </Pressable>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>The Slice</Text>
-                        </Pressable>
-
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>The Fire Grill</Text>
-                        </Pressable>
-
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>Simply Oasis</Text>
-                        </Pressable>
-
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>The Chefs Table</Text>
-                        </Pressable>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>Sushi</Text>
-                        </Pressable>
-            
-                        <Pressable style={styles.button}
-                            onPress={() => navigation.navigate('Benson')}>
-                            <Text style={styles.buttonText}>Acai</Text>
-                        </Pressable>
+                        {
+                            Object.keys(bensonRestaurants).map((key) => {
+                                return (
+                                    <Pressable style={styles.button} key={key}
+                                        onPress={() => navigation.navigate('Foods Page', {restaurantKey: key, restaurantName: bensonRestaurants[key]})}>
+                                        <Text style={styles.buttonText}>{bensonRestaurants[key]}</Text>
+                                    </Pressable>
+                                )
+                            })
+                        }
                     </View>
                 </ScrollView>
             </View>
