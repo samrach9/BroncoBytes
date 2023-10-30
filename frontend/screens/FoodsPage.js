@@ -1,26 +1,33 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
+import FoodCard from '../components/foodCard';
 
-export default function FreshBytes() {
+export default function FoodsPage({route}) {
 
     const navigation = useNavigation();
     const {allFood, setAllFood} = useContext(FoodContext);
 
+    const food = allFood.filter((item) => !('restaurantKey' in route.params) || 'restaurants' in item && item.restaurants.includes(route.params.restaurantKey));
+
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <TopBar text={"Fresh Bytes"}/>
+                <TopBar text={route.params.restaurantName}/>
                 <View style={styles.content}>
-                    <Text>Content</Text>
+                    {food.map((item) => {
+                        return (
+                            <FoodCard key={item.foodId} food={item} />
+                        )
+                    })}
                 </View>
             </View>
             <Footer
                 leftButtonText={"Back"}
-                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                leftButtonPress={() => navigation.pop()}
                 iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Review"}
                 rightButtonPress={() => navigation.navigate('Leave Review')}
