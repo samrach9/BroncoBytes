@@ -440,11 +440,7 @@ Resources:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
           Projection:
-            NonKeyAttributes:
-            - username
-            - password
-            - dateCreated
-            ProjectionType: INCLUDE
+            ProjectionType: ALL
         - IndexName: usernameIndex
           KeySchema:
           - AttributeName: username 
@@ -453,11 +449,7 @@ Resources:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
           Projection:
-            NonKeyAttributes:
-            - email
-            - password
-            - dateCreated
-            ProjectionType: INCLUDE
+            ProjectionType: ALL
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1

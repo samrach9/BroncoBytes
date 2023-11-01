@@ -10,8 +10,11 @@ import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
+import putFood from '../api/putFood';
+import { restaurants } from '../enum/restaurants';
+import { foodTypes } from '../enum/foodTypes';
 
-export default function LeaveReview({route}) {
+export default function CreateFood() {
 
     const navigation = useNavigation();
 
@@ -21,7 +24,9 @@ export default function LeaveReview({route}) {
     const { allFood, setAllFood } = useContext(FoodContext);
     const { user, setUser } = useContext(UserContext);
     const userId = user.userId;
-    const [foodId, setFoodId] = useState((route.params && "foodId" in route.params) ? route.params.foodId : null);
+    const [foodName, setFoodName] = useState("");
+    const [restaurant, setRestaurant] = useState("");
+    const [foodType, setFoodType] = useState("");
     const [rating, setRating] = useState(2.5);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -66,9 +71,19 @@ export default function LeaveReview({route}) {
     };
 
 
-    const submitReview = async () => {
-        if (foodId == null) {
-            alert("Please select a food");
+    const submitFood = async () => {
+        if (foodName == "") {
+            alert("Please enter a food name");
+            return;
+        }
+
+        if (restaurant == "") {
+            alert("Please select a restaurant");
+            return;
+        }
+
+        if (foodType == "") {
+            alert("Please select a food type");
             return;
         }
 
@@ -81,7 +96,18 @@ export default function LeaveReview({route}) {
             alert("Please enter a body");
             return;
         }
+
+        navigation.navigate('Loading')
+
+        const food = {
+            name: foodName,
+            restaurants: [restaurant],
+            type: foodType,
+        };
         
+        const foodId = await putFood(food);
+        food.foodId = foodId;
+
         let imageUrls = [];
 
         navigation.navigate('Loading')
@@ -109,23 +135,22 @@ export default function LeaveReview({route}) {
         review.reviewId = reviewId;
         review.user = user;
         review.dateCreated = Date.now() / 1000;
+        food.reviews = [];
+        food.reviews.push(review);
+        food.imageUrls = imageUrls;
+        food.rating = review.rating;
 
-        await setAllFood(allFood.map((food) => {
-            if (food.foodId == foodId) {
-                food.reviews.push(review);
-                return food;
-            } else {
-                return food;
-            }
-        }));
+        await setAllFood([...allFood, food]);
 
-        navigation.navigate('Leave Review');
-        alert("Review submitted!");
+        navigation.navigate('Create Food');
+        alert("Food Created!");
         resetState();
     }
 
     const resetState = () => {
-        setFoodId(null);
+        setFoodName("");
+        setRestaurant("");
+        setFoodType("");
         setRating(2.5);
         setTitle("");
         setBody("");
@@ -134,12 +159,27 @@ export default function LeaveReview({route}) {
 
     return (
         <View style={styles.container}>
-            <TopBar text={"Leave a Review"} />
+            <TopBar text={"Create a Food"} />
             <KeyboardAvoidingView style={styles.contentContainer} behavior='height'>
+                <Text style={styles.labelText}>Food Name</Text>
+                <TextInput
+                    value={foodName}
+                    onChangeText={setFoodName}
+                    style={styles.titleInput}
+                    placeholder='Enter food name'
+                />
+                <Text style={styles.labelText}>Restaurant</Text>
                 <RNPickerSelect
-                    value={foodId}
-                    onValueChange={(value) => setFoodId(value)}
-                    items={allFood.map(food => ({ label: food.name, value: food.foodId }))}
+                    value={restaurant}
+                    onValueChange={(value) => setRestaurant(value)}
+                    items={Object.keys(restaurants).map((key) => ({ label: restaurants[key], value: key }))}
+                    style={pickerSelectStyles}
+                />
+                <Text style={styles.labelText}>Food Type</Text>
+                <RNPickerSelect
+                    value={foodType}
+                    onValueChange={(value) => setFoodType(value)}
+                    items={Object.keys(foodTypes).map((key) => ({ label: foodTypes[key], value: key }))}
                     style={pickerSelectStyles}
                 />
                 <Text style={styles.labelText}>Rating</Text>
@@ -183,7 +223,7 @@ export default function LeaveReview({route}) {
                 leftButtonPress={() => navigation.pop()}
                 iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Submit"}
-                rightButtonPress={() => submitReview()}
+                rightButtonPress={() => submitFood()}
             />
         </View>
     )
