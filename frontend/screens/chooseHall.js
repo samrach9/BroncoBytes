@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Footer } from '../components/footer';
+import { UserContext } from '../App';
 
 export default function ChooseHall() {
 
     const navigation = useNavigation();
+    const { user, setUser } = useContext(UserContext);
 
     return (
         // Container
@@ -22,14 +24,21 @@ export default function ChooseHall() {
                     </Pressable>
 
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Foods Page', {restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes"})}>
+                        onPress={() => navigation.navigate('Foods Page', { restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes" })}>
                         <Text style={styles.buttonText}>Fresh Bytes</Text>
                     </Pressable>
                 </View>
                 <Pressable style={styles.allReviewsButton}
-                    onPress={() => navigation.navigate('Foods Page', {restaurantName: "All Reviews"})}>
+                    onPress={() => navigation.navigate('Foods Page', { restaurantName: "All Reviews" })}>
                     <Text style={styles.allReviewsText}>All Reviews</Text>
                 </Pressable>
+                {
+                    user.admin &&
+                    <Pressable style={styles.allReviewsButton}
+                        onPress={() => navigation.navigate('Create Food')}>
+                        <Text style={styles.allReviewsText}>Create Food</Text>
+                    </Pressable>
+                }
             </View>
             <Footer
                 leftButtonText={"Back"}
@@ -39,7 +48,7 @@ export default function ChooseHall() {
                 rightButtonPress={() => navigation.navigate('Leave Review')}
             />
         </View>
-        
+
     )
 }
 

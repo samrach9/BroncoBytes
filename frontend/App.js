@@ -19,6 +19,7 @@ import SignUp from './screens/signup';
 import Friends from './screens/friends';
 import FoodsPage from './screens/FoodsPage';
 import ReviewsPage from './screens/ReviewsPage';
+import CreateFood from './screens/createFood';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -85,6 +86,7 @@ export default function App() {
             <Stack.Screen name='Navigation' component={Navigation} />
             <Stack.Screen name='Foods Page' component={FoodsPage} />
             <Stack.Screen name='Reviews Page' component={ReviewsPage} />
+            <Stack.Screen name='Create Food' component={CreateFood} />
           </Stack.Navigator>
         </NavigationContainer>
       </FoodContext.Provider>
