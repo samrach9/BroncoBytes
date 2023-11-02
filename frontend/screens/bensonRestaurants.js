@@ -59,11 +59,12 @@ const styles = StyleSheet.create({
         margin: 5,
         justifyContent: 'stretch',
         alignItems: 'stretch',
-        width: 305,
+        width: 300,
+        columns: 2
     },
     buttonText: {
         fontFamily: 'Bungee',
-        fontSize: 25,
+        fontSize: 20,
         color: '#B30738',
         textAlign: 'center',
         padding: 10,
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignContent: 'center',
         alignItems: 'center',
+        columns: 2 
     }
 });
 

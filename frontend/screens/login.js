@@ -50,7 +50,7 @@ export default function Login() {
             navigation.reset(
                 {
                     index: 0,
-                    routes: [{ name: 'Home' }],
+                    routes: [{ name: 'Navigation' }],
                 }
             )
         }

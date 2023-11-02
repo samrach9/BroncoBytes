@@ -67,6 +67,9 @@ export default function FoodCard(props) {
                         startingValue={food.rating}
                         readonly={true}
                         imageSize={20}
+                        tintColor='#850529'
+                        type='custom'
+                        ratingBackgroundColor='#850529'
                     />
                 </View>
                 <View style={styles.notesContainer}>
@@ -87,14 +90,15 @@ const styles = StyleSheet.create({
     ratingCard: {
         height: 400,
         width: 300,
-        backgroundColor: 'white',
+        backgroundColor: '#850529',
         margin: 50,
         padding: 10,
         borderWidth: 2,
-        borderColor: 'black',
+        borderColor: '#850529',
+        borderRadius: 10
     },
     foodImageContainer: {
-        borderColor: 'black',
+        borderColor: '#850529',
         borderWidth: 2,
         flex: 9,
         alignItems: 'center',
@@ -117,6 +121,7 @@ const styles = StyleSheet.create({
     submittedText: {
         fontFamily: 'Bungee',
         fontSize: 8,
+        color: '#db88a0'
     },
     foodImage: {
         width: '100%',
@@ -128,12 +133,16 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         fontFamily: 'Bungee',
+        color: 'white',
+        textAlign: 'center'
     },
     ratingText: {
         fontFamily: 'Bungee',
+        color: 'white'
     },
     notesText: {
         fontFamily: 'Bungee',
-        fontSize: 10
+        fontSize: 10,
+        color: 'white'
     },
 });

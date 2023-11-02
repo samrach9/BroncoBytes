@@ -36,13 +36,13 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#B30738',
         alignItems: 'center',
         justifyContent: 'center',
     },
     loadText: {
         fontFamily: 'Bungee',
-        color: "#B30738",
+        color: "white",
         fontSize: 40,
     },
     icon: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     button: {
-        backgroundColor: '#B30738',
+        backgroundColor: 'white',
         padding: 5,
         borderRadius: 20,
         margin: 5,
@@ -62,28 +62,18 @@ const styles = StyleSheet.create({
     buttonText: {
         fontFamily: 'Bungee',
         fontSize: 25,
-        color: 'white',
+        color: '#B30738',
         textAlign: 'center',
         padding: 10,
     },
     biteText: {
         fontFamily: 'Bungee',
         fontSize: 32,
-        color: '#B30738',
+        color: 'white',
     },
     foodCardContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    ratingCard: {
-        height: 400,
-        width: 300,
-        backgroundColor: 'white',
-        margin: 50,
-        marginTop: 5,
-        padding: 10,
-        borderWidth: 2,
-        borderColor: 'black',
     },
     foodImageContainer: {
         borderColor: 'black',
