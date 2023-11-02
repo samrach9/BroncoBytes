@@ -23,13 +23,13 @@ export default function Navigation() {
                 </View>
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Benson Restaurants')}>
-                        <Text style={styles.buttonText}>My Profile</Text>
+                        onPress={() => navigation.navigate('Home')}>
+                        <Text style={styles.buttonText}>Reviews</Text>
                     </Pressable>
 
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Choose Hall')}>
-                        <Text style={styles.buttonText}>Browse Reviews</Text>
+                        onPress={() => navigation.navigate('Benson Restaurants')}>
+                        <Text style={styles.buttonText}>My Profile</Text>
                     </Pressable>
 
                     <Pressable style={styles.button}

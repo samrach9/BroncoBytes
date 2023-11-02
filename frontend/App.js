@@ -31,7 +31,7 @@ export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
   const [allFood, setAllFood] = useState(null);
   const [user, setUser] = useState({});
-  const [initialRouteName, setInitialRouteName] = useState('Home');
+  const [initialRouteName, setInitialRouteName] = useState('Navigation');
   const Stack = createNativeStackNavigator();
 
   useEffect(() => {

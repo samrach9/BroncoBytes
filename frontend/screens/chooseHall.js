@@ -3,11 +3,14 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Footer } from '../components/footer';
 import { UserContext } from '../App';
+import { FoodContext } from '../App';
+import FoodCard from '../components/foodCard';
 
 export default function ChooseHall() {
 
     const navigation = useNavigation();
     const { user, setUser } = useContext(UserContext);
+    const { allFood, setAllFood } = useContext(FoodContext);
 
     return (
         // Container
@@ -17,6 +20,7 @@ export default function ChooseHall() {
                     <Text style={styles.chooseHallText}>Choose A</Text>
                     <Text style={styles.chooseHallText}>Dining Hall</Text>
                 </View>
+
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button}
                         onPress={() => navigation.navigate('Benson Restaurants')}>
