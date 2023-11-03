@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Image, Pressable, Button, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
-import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
+import { TopBar } from '../components/topBar';
 
 // options shift f
 export default function Navigation() {
@@ -15,34 +15,54 @@ export default function Navigation() {
         // Container
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <View style={styles.chooseHallContainer}>
-                    <Text style={styles.chooseHallText}>Bronco Bytes</Text>
-                    <Image
-                        source={require('../assets/LogoWhite.png')}
-                        style={styles.icon} />
+                <View style={styles.userInformationContainer}>
+                    <View style={styles.profileIconContainer}>
+                        <Text style={styles.circle}></Text>
+                    </View>
+                    <View style={styles.myProfileTextContainer}>
+                        <Text style={styles.chooseHallText}>Username</Text>
+                    </View>
                 </View>
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button}
                         onPress={() => navigation.navigate('Home')}>
-                        <Text style={styles.buttonText}>Reviews</Text>
+                        <Text style={styles.buttonText}>Change Name</Text>
                     </Pressable>
 
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Account Profile')}>
-                        <Text style={styles.buttonText}>My Profile</Text>
+                        onPress={() => navigation.navigate('Benson Restaurants')}>
+                        <Text style={styles.buttonText}>Change Password</Text>
+                    </Pressable>
+
+                    <Pressable style={styles.button}
+                        onPress={() => navigation.navigate('Home')}>
+                        <Text style={styles.buttonText}>Edit Profile Photo</Text>
                     </Pressable>
 
                     <Pressable style={styles.button}
                         onPress={() => navigation.navigate('Leave Review')}>
-                        <Text style={styles.buttonText}>Leave Review</Text>
+                        <Text style={styles.buttonText}>View My Reviews</Text>
                     </Pressable>
 
                     <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Friends')}>
-                        <Text style={styles.buttonText}>View Friends Feed</Text>
+                        onPress={() => navigation.navigate('Choose Hall')}>
+                        <Text style={styles.buttonText}>Delete Account</Text>
                     </Pressable>
 
                 </View>
+                <View style={styles.logOutContainer}>
+                    <Pressable style = {styles.chooseHallText}
+                    onPress = {() => navigation.navigate('Login')}>
+                        <Text style={styles.chooseHallText}>Log Out</Text>
+                    </Pressable>
+                </View>
+                <Footer
+                    leftButtonText={"Back"}
+                    leftButtonPress={() => navigation.navigate('Choose Hall')}
+                    iconButtonPress={() => navigation.navigate('Navigation')}
+                    rightButtonText={"Review"}
+                    rightButtonPress={() => navigation.navigate('Leave Review')}
+                />
             </View>
         </View>
     )
@@ -59,8 +79,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    chooseHallContainer: {
-        padding: 15,
+    myProfileTextContainer: {
+        padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -85,20 +105,22 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Bungee',
-        fontSize: 25,
+        fontSize: 24,
         color: '#B30738',
         textAlign: 'center',
         padding: 10,
     },
     chooseHallText: {
         fontFamily: 'Bungee',
-        fontSize: 35,
+        fontSize: 30,
         color: 'white',
         textAlign: 'center',
     },
     buttonContainer: {
+        flex: 1,
         alignContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     allReviewsButton: {
         width: 202,
@@ -113,5 +135,24 @@ const styles = StyleSheet.create({
         color: '#B30738',
         textAlign: 'center',
         padding: 10,
-    }
+    },
+    profileIconContainer: {
+        marginTop: 60,
+        alignItems: 'flex-start',
+    },
+    circle: {
+        borderRadius: '75%',
+        borderColor: 'black',
+        borderWidth: 2,
+        width: 150,
+        height: 150,
+        marginBottom: 30,
+    },
+    logOutContainer: {
+        marginTop: 30,
+        flex: 0.3,
+    },
+    userInformationContainer: {
+        flexDirection: 'row',
+    },
 });
