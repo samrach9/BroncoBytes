@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <View style={styles.biteOTD}>
-                <Text style={styles.biteText}>Bite of the Day</Text>
+                <Text style={styles.biteText}>Byte of the Day</Text>
             </View>
             
             <FoodCard key={allFood[0].foodId} food={allFood[0]} />
