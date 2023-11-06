@@ -5,6 +5,7 @@ import { FoodContext } from '../App';
 import { Footer } from '../components/footer';
 import { TopBar } from '../components/topBar';
 import { bensonRestaurants } from '../enum/bensonRestaurants';
+import { BigRectangleButton } from '../components/bigRectangleButton';
 
 export default function BensonRestaurants() {
 
@@ -20,10 +21,7 @@ export default function BensonRestaurants() {
                         {
                             Object.keys(bensonRestaurants).map((key) => {
                                 return (
-                                    <Pressable style={styles.button} key={key}
-                                        onPress={() => navigation.navigate('Foods Page', {restaurantKey: key, restaurantName: bensonRestaurants[key]})}>
-                                        <Text style={styles.buttonText}>{bensonRestaurants[key]}</Text>
-                                    </Pressable>
+                                    <BigRectangleButton text={bensonRestaurants[key]} onClick={() => navigation.navigate('Foods Page', {restaurantKey: key, restaurantName: bensonRestaurants[key]})} />
                                 )
                             })
                         }
@@ -51,23 +49,6 @@ const styles = StyleSheet.create({
     },
     content: {
         alignItems: 'center',
-    },
-    button: {
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-        justifyContent: 'stretch',
-        alignItems: 'stretch',
-        width: 300,
-        columns: 2
-    },
-    buttonText: {
-        fontFamily: 'Bungee',
-        fontSize: 20,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
     },
     buttonContainer: {
         alignContent: 'center',

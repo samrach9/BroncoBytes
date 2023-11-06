@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import FoodCard from '../components/foodCard';
+import { BigRectangleButton } from '../components/bigRectangleButton';
 
 export default function Home() {
 
@@ -18,16 +19,8 @@ export default function Home() {
             <FoodCard key={allFood[0].foodId} food={allFood[0]} />
 
             <View style={styles.buttonsContainer}>
-
-                <Pressable style={styles.button}
-                    onPress={() => navigation.navigate('Choose Hall')}>
-                    <Text style={styles.buttonText}>Browse Reviews</Text>
-                </Pressable>
-                <Pressable style={styles.button}
-                    onPress={() => navigation.navigate('Leave Review')}>
-                    <Text style={styles.buttonText}>Leave A Review</Text>
-                </Pressable>
-
+                <BigRectangleButton text='Browse Reviews' onClick={() => navigation.navigate('Choose Hall')} />
+                <BigRectangleButton text='Leave A Review' onClick={() => navigation.navigate('Leave Review')} />
             </View>
         </View>
     )
@@ -49,22 +42,6 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         margin: 10,
-    },
-    button: {
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-        justifyContent: 'stretch',
-        alignItems: 'stretch',
-        width: 305,
-    },
-    buttonText: {
-        fontFamily: 'Bungee',
-        fontSize: 25,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
     },
     biteText: {
         fontFamily: 'Bungee',

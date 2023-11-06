@@ -73,7 +73,7 @@ export default function FoodCard(props) {
                     />
                 </View>
                 <View style={styles.notesContainer}>
-                    <Text style={styles.notesText}>Notes: {food.reviews[0].body}</Text>
+                    <Text style={styles.notesText}>{food.reviews[0].body}</Text>
                 </View>
                 <View style={styles.submittedContainer}>
                     <Text style={styles.submittedText}>- Submitted By: {food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     notesText: {
-        fontFamily: 'Bungee',
         fontSize: 10,
         color: 'white'
     },

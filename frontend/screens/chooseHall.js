@@ -5,12 +5,18 @@ import { Footer } from '../components/footer';
 import { UserContext } from '../App';
 import { FoodContext } from '../App';
 import FoodCard from '../components/foodCard';
+import { BigRectangleButton } from '../components/bigRectangleButton';
+import { SmallRectangleButton } from '../components/smallRectangleButton';
 
 export default function ChooseHall() {
 
     const navigation = useNavigation();
     const { user, setUser } = useContext(UserContext);
     const { allFood, setAllFood } = useContext(FoodContext);
+
+    const navigateToFreshBytes = () => {
+        navigation.navigate('Foods Page', { restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes" })
+    }
 
     return (
         // Container
@@ -22,26 +28,13 @@ export default function ChooseHall() {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Benson Restaurants')}>
-                        <Text style={styles.buttonText}>Benson</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Foods Page', { restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes" })}>
-                        <Text style={styles.buttonText}>Fresh Bytes</Text>
-                    </Pressable>
+                    <BigRectangleButton text='Benson' onClick={() => navigation.navigate('Benson Restaurants')} />
+                    <BigRectangleButton text='Fresh Bytes' onClick={() => navigation.navigate('Foods Page', { restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes" })} />
+                    <SmallRectangleButton text='All Reviews' onClick={() => navigation.navigate('Foods Page', { restaurantName: "All Reviews" })} />
                 </View>
-                <Pressable style={styles.allReviewsButton}
-                    onPress={() => navigation.navigate('Foods Page', { restaurantName: "All Reviews" })}>
-                    <Text style={styles.allReviewsText}>All Reviews</Text>
-                </Pressable>
                 {
                     user.admin &&
-                    <Pressable style={styles.allReviewsButton}
-                        onPress={() => navigation.navigate('Create Food')}>
-                        <Text style={styles.allReviewsText}>Create Food</Text>
-                    </Pressable>
+                    <SmallRectangleButton text='Create Food' onClick={() => navigation.navigate('Create Food')} />
                 }
             </View>
             <Footer
@@ -83,22 +76,6 @@ const styles = StyleSheet.create({
         height: 100,
         margin: 10,
     },
-    button: {
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-        justifyContent: 'stretch',
-        alignItems: 'stretch',
-        width: 305,
-    },
-    buttonText: {
-        fontFamily: 'Bungee',
-        fontSize: 25,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
-    },
     chooseHallText: {
         fontFamily: 'Bungee',
         fontSize: 35,
@@ -109,18 +86,4 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
     },
-    allReviewsButton: {
-        width: 202,
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-    },
-    allReviewsText: {
-        fontFamily: 'Bungee',
-        fontSize: 20,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
-    }
 });

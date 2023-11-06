@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
+import { BigRectangleButton } from '../components/bigRectangleButton';
 
 // options shift f
 export default function Navigation() {
@@ -22,26 +23,10 @@ export default function Navigation() {
                         style={styles.icon} />
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
-                        <Text style={styles.buttonText}>Reviews</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Account Profile')}>
-                        <Text style={styles.buttonText}>My Profile</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Leave Review')}>
-                        <Text style={styles.buttonText}>Leave Review</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Friends')}>
-                        <Text style={styles.buttonText}>View Friends Feed</Text>
-                    </Pressable>
-
+                    <BigRectangleButton text='Reviews' onClick={() => navigation.navigate('Home')} />
+                    <BigRectangleButton text='Leave Review' onClick={() => navigation.navigate('Leave Review')} />
+                    <BigRectangleButton text='My Profile' onClick={() => navigation.navigate('Account Profile')} />
+                    <BigRectangleButton text='View Friends Feed' onClick={() => navigation.navigate('Friends')} />
                 </View>
             </View>
         </View>
@@ -73,22 +58,6 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         margin: 10,
-    },
-    button: {
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-        justifyContent: 'stretch',
-        alignItems: 'stretch',
-        width: 305,
-    },
-    buttonText: {
-        fontFamily: 'Bungee',
-        fontSize: 25,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
     },
     chooseHallText: {
         fontFamily: 'Bungee',
