@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { Footer } from '../components/footer';
 import { TopBar } from '../components/topBar';
+import { BigRectangleButton } from '../components/bigRectangleButton';
 
 // options shift f
 export default function Navigation() {
@@ -24,31 +25,11 @@ export default function Navigation() {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
-                        <Text style={styles.buttonText}>Change Name</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Benson Restaurants')}>
-                        <Text style={styles.buttonText}>Change Password</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Home')}>
-                        <Text style={styles.buttonText}>Edit Profile Photo</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Leave Review')}>
-                        <Text style={styles.buttonText}>View My Reviews</Text>
-                    </Pressable>
-
-                    <Pressable style={styles.button}
-                        onPress={() => navigation.navigate('Choose Hall')}>
-                        <Text style={styles.buttonText}>Delete Account</Text>
-                    </Pressable>
-
+                    <BigRectangleButton text='Change Name' onClick={() => navigation.navigate('Navigation')}/>
+                    <BigRectangleButton text='Change Password' onClick={() => navigation.navigate('Navigation')}/>
+                    <BigRectangleButton text='Edit Profile Photo' onClick={() => navigation.navigate('Navigation')}/>
+                    <BigRectangleButton text='View My Rewards' onClick={() => navigation.navigate('Navigation')}/>
+                    <BigRectangleButton text='Delete Account' onClick={() => navigation.navigate('Navigation')}/>
                 </View>
                 <View style={styles.logOutContainer}>
                     <Pressable style = {styles.chooseHallText}
@@ -94,22 +75,6 @@ const styles = StyleSheet.create({
         height: 100,
         margin: 10,
     },
-    button: {
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-        justifyContent: 'stretch',
-        alignItems: 'stretch',
-        width: 305,
-    },
-    buttonText: {
-        fontFamily: 'Bungee',
-        fontSize: 24,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
-    },
     chooseHallText: {
         fontFamily: 'Bungee',
         fontSize: 30,
@@ -121,20 +86,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    allReviewsButton: {
-        width: 202,
-        backgroundColor: 'white',
-        padding: 5,
-        borderRadius: 20,
-        margin: 5,
-    },
-    allReviewsText: {
-        fontFamily: 'Bungee',
-        fontSize: 20,
-        color: '#B30738',
-        textAlign: 'center',
-        padding: 10,
     },
     profileIconContainer: {
         marginTop: 60,
