@@ -5,12 +5,31 @@ import { FoodContext } from '../App';
 import { Footer } from '../components/footer';
 import { TopBar } from '../components/topBar';
 import { BigRectangleButton } from '../components/bigRectangleButton';
+import { UserContext } from '../App';
+import * as SecureStore from 'expo-secure-store';
 
 // options shift f
 export default function Navigation() {
 
     const navigation = useNavigation();
     const { allFood, setAllFood } = useContext(FoodContext);
+    const { user, setUser } = useContext(UserContext);
+
+    const logOut = async () => {
+        navigation.navigate('Loading')
+        try {
+            await SecureStore.deleteItemAsync("user");
+        } catch (e) {
+            navigation.navigate('Navigation')
+            alert("Error logging out.");
+        } finally {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            })
+            setUser(null);
+        }
+    }
 
     return (
         // Container
@@ -21,7 +40,7 @@ export default function Navigation() {
                         <Text style={styles.circle}></Text>
                     </View>
                     <View style={styles.myProfileTextContainer}>
-                        <Text style={styles.chooseHallText}>Username</Text>
+                        <Text style={styles.chooseHallText}>{user.username}</Text>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
@@ -33,7 +52,7 @@ export default function Navigation() {
                 </View>
                 <View style={styles.logOutContainer}>
                     <Pressable style = {styles.chooseHallText}
-                    onPress = {() => navigation.navigate('Login')}>
+                    onPress = {logOut}>
                         <Text style={styles.chooseHallText}>Log Out</Text>
                     </Pressable>
                 </View>
