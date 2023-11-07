@@ -10,7 +10,8 @@ export default function ReviewsPage({route}) {
 
     const navigation = useNavigation();
     
-    const food = route.params.food; 
+    const food = route.params.food;
+    const reviews = food.reviews.sort((a, b) => b.dateCreated - a.dateCreated); 
     
     return (
         <View style={styles.container}>
@@ -18,7 +19,7 @@ export default function ReviewsPage({route}) {
                 <TopBar text={food.name}/>
                 <FoodCard food={food} />
                 <View style={styles.content}>
-                    {food.reviews.map((item) => {
+                    {reviews.map((item) => {
                         return (
                             <ReviewCard key={item.reviewId} review={item} />
                         )
