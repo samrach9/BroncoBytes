@@ -31,6 +31,7 @@ export default function ChooseHall() {
                     <BigRectangleButton text='Benson' onClick={() => navigation.navigate('Benson Restaurants')} />
                     <BigRectangleButton text='Fresh Bytes' onClick={() => navigation.navigate('Foods Page', { restaurantKey: "FreshBytes", restaurantName: "Fresh Bytes" })} />
                     <SmallRectangleButton text='All Reviews' onClick={() => navigation.navigate('Foods Page', { restaurantName: "All Reviews" })} />
+                    
                 </View>
                 {
                     user.admin &&
