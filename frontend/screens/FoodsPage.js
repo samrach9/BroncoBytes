@@ -5,6 +5,7 @@ import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
 import FoodCard from '../components/foodCard';
+import { BigRectangleButton } from '../components/bigRectangleButton';
 
 export default function FoodsPage({route}) {
 

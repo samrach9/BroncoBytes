@@ -1,12 +1,8 @@
 import React from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+
 
 export function BigRectangleButton(props) {
-
-    const navigation = useNavigation();
-    const {onClick} = props.onClick;
-
     return (
         <Pressable style={styles.button}
             onPress={props.onClick}>
