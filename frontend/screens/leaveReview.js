@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, Modal } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
@@ -10,6 +10,7 @@ import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
+import { CustomModal } from '../components/customModal';
 
 export default function LeaveReview({route}) {
 
@@ -154,21 +155,14 @@ export default function LeaveReview({route}) {
                 <Text style={styles.labelText}>Body</Text>
                 <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
                 <Text style={styles.labelText}>Upload Photo(s)</Text>
-                <Modal visible={imagePickerModalVisible} animationType='fade' transparent>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContentContainer}>
+                <CustomModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible}>
                             <TouchableOpacity onPress={pickImage}>
                                 <Text style={styles.labelText}>Pick From Library</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={takeImage}>
                                 <Text style={styles.labelText}>Take Photo</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setImagePickerModalVisible(false)}>
-                                <Text style={styles.labelText}>X</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                </CustomModal>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
                         <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
@@ -199,22 +193,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'top',
         alignItems: 'center',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#00000080',
-    },
-    modalContentContainer: {
-        backgroundColor: '#B30738',
-        justifyContent: 'center',
-        width: 'auto',
-        height: 'auto',
-        alignItems: 'center',
-        borderRadius: 5,
-        borderColor: 'white',
-        borderWidth: 1,
     },
     bodyInput: {
         width: "80%",
