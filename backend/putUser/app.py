@@ -70,7 +70,8 @@ def lambda_handler(event, context):
             },
         )
         item = response['Item']
-        item['password'] = {'S': body['password']}
+        if ('password' in body):
+            item['password'] = {'S': body['password']}
         if (item['email']['S'] != body['email'] and email_taken(body['email'], db_client, DYNAMODB_TABLE)):
             return email_already_exists_response
         item['email'] = {'S': body['email']}
