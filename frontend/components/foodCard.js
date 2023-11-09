@@ -55,29 +55,35 @@ export default function FoodCard(props) {
                 <View style={styles.cardTitleContainer}>
                     <Text style={styles.cardTitle}>{food.name}</Text>
                 </View>
-                {firstImage &&
+                {
+                    firstImage &&
                     <View style={styles.foodImageContainer}>
                         <Image source={{ uri: firstImage }}
                             style={styles.foodImage} />
                     </View>
                 }
-                <View style={styles.starContainer}>
-                    <Text style={styles.ratingText}>Rating: </Text>
-                    <Rating
-                        startingValue={food.rating}
-                        readonly={true}
-                        imageSize={20}
-                        tintColor='#850529'
-                        type='custom'
-                        ratingBackgroundColor='#850529'
-                    />
-                </View>
-                <View style={styles.notesContainer}>
-                    <Text style={styles.notesText}>{food.reviews[0].body}</Text>
-                </View>
-                <View style={styles.submittedContainer}>
-                    <Text style={styles.submittedText}>- Submitted By: {food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
-                </View>
+                {
+                    'reviews' in food && food.reviews.length > 0 &&
+                    <>
+                        <View style={styles.starContainer}>
+                            <Text style={styles.ratingText}>Rating: </Text>
+                            <Rating
+                                startingValue={food.rating}
+                                readonly={true}
+                                imageSize={20}
+                                tintColor='#850529'
+                                type='custom'
+                                ratingBackgroundColor='#850529'
+                            />
+                        </View>   
+                        <View style={styles.notesContainer}>
+                            <Text style={styles.notesText}>{'reviews' in food && food.reviews.length > 0 && food.reviews[0].body}</Text>
+                        </View>
+                        <View style={styles.submittedContainer}>
+                            <Text style={styles.submittedText}>- Submitted { 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
+                        </View>
+                    </>
+                }
             </View>
         </TouchableOpacity>
     )
