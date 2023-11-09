@@ -5,17 +5,19 @@ import { Image } from 'expo-image';
 import * as Crypto from 'expo-crypto';
 import { Footer } from '../components/footer';
 import { BigRectangleButton } from '../components/bigRectangleButton';
-import { UserContext } from '../App';
+import { FoodContext, UserContext } from '../App';
 import * as SecureStore from 'expo-secure-store';
 import { CustomModal } from '../components/customModal';
 import updateUser from '../api/updateUser';
 import removeUser from '../api/removeUser';
 import { ImagePickerModal } from '../components/imagePickerModal';
+import getReviewsByUser from '../api/getReviewsByUser';
 
 // options shift f
 export default function Navigation() {
 
     const navigation = useNavigation();
+    const { allFoods, setAllFoods } = useContext(FoodContext);
     const { user, setUser } = useContext(UserContext);
     const [changeNmeModalVisible, setChangeNameModalVisible] = useState(false);
     const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
@@ -134,6 +136,18 @@ export default function Navigation() {
         )
     }
 
+    async function viewUserReviews() {
+        navigation.navigate('Loading')
+        const reviews = await getReviewsByUser(user.userId);
+        const reviewsWithUsername = reviews.map((review) => { return { ...review, user: user } });
+        const userFood = {
+            foodId: user.userId,
+            name: "Your Reviews",
+            reviews: reviewsWithUsername,
+        }
+        navigation.navigate('Reviews Page', { food: userFood });
+    }
+
     function DeleteAccountModal() {
         const [password, setPassword] = useState('');
 
@@ -218,7 +232,7 @@ export default function Navigation() {
                     <ChangePasswordModal />
                     <BigRectangleButton text='Change Profile Photo' onClick={() => setChangeProfilePhotoModalVisible(true)} />
                     <ChangeProfilePhotoModal />
-                    <BigRectangleButton text='View My Reviews' onClick={() => navigation.navigate('Navigation')} />
+                    <BigRectangleButton text='View My Reviews' onClick={() => viewUserReviews()} />
                     <BigRectangleButton text='Delete Account' onClick={() => setDeleteAccountModalVisible(true)} />
                     <DeleteAccountModal />
                 </View>

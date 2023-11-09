@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
+import { FoodContext } from '../App';
+import removeReview from '../api/removeReview';
 
-export default function FoodCard(props) {
+export default function ReviewCard(props) {
 
     const navigation = useNavigation();
-
     const review = props.review;
+    const { allFood, setAllFood } = useContext(FoodContext);
+
+    const handleRemoveReview = async () => {
+        navigation.navigate('Loading');
+        await removeReview(review.reviewId);
+        setAllFood(allFood.map((item) => {
+            if (item.foodId == review.foodId) {
+                item.reviews = item.reviews.filter((item) => item.reviewId != review.reviewId);
+            }
+            return item;
+        }));
+        navigation.pop();
+    }
 
     return (
         <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Review Page', {review: review})}>
@@ -33,6 +47,12 @@ export default function FoodCard(props) {
                 <View style={styles.submittedContainer}>
                     <Text style={styles.submittedText}>- Submitted By: {review.user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(review.dateCreated * 1000)} -</Text>
                 </View>
+                { 
+                    props.canRemove && 
+                    <TouchableOpacity onPress={() => handleRemoveReview()}>
+                        <Text style={styles.removeText}>Remove</Text>
+                    </TouchableOpacity>
+                }
             </View>
         </TouchableOpacity>
     )
@@ -99,4 +119,10 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: 'white'
     },
+    removeText: {
+        fontFamily: 'Bungee',
+        color: 'white',
+        textAlign: 'center',
+        marginTop: 10,
+    }
 });
