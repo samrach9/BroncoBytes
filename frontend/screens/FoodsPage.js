@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
@@ -15,7 +15,7 @@ export default function FoodsPage({route}) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.contentContainer}>
+            <ScrollView style={styles.contentContainer}>
                 <TopBar text={route.params.restaurantName}/>
                 <View style={styles.content}>
                     {food.map((item) => {
@@ -24,7 +24,7 @@ export default function FoodsPage({route}) {
                         )
                     })}
                 </View>
-            </View>
+            </ScrollView>
             <Footer
                 leftButtonText={"Back"}
                 leftButtonPress={() => navigation.pop()}
