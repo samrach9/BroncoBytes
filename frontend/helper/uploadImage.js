@@ -6,11 +6,11 @@ const s3 = new S3({
   secretAccessKey: process.env.EXPO_PUBLIC_S3_SECRET_ACCESS_KEY,
 });
 
-export default uploadImage = async (uri, key) => {
+export default uploadImage = async (uri, key, bucket) => {
   const response = await fetch(uri);
   const blob = await response.blob();
   const params = {
-    Bucket: process.env.EXPO_PUBLIC_S3_BUCKET_NAME,
+    Bucket: bucket,
     Key: key,
     Body: blob,
   };
