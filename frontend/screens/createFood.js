@@ -8,6 +8,7 @@ import { UserContext } from '../App';
 import { Rating } from 'react-native-ratings';
 import { TopBar } from '../components/topBar';
 import { Footer } from '../components/footer';
+import { ImagePickerModal } from '../components/imagePickerModal';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
 import putFood from '../api/putFood';
@@ -17,9 +18,6 @@ import { foodTypes } from '../enum/foodTypes';
 export default function CreateFood() {
 
     const navigation = useNavigation();
-
-    const [mediaLibraryStatus, mediaLibraryRequestPermissions] = ImagePicker.useMediaLibraryPermissions();
-    const [cameraStatus, cameraRequestPermissions] = ImagePicker.useCameraPermissions();
 
     const { allFood, setAllFood } = useContext(FoodContext);
     const { user, setUser } = useContext(UserContext);
@@ -33,43 +31,6 @@ export default function CreateFood() {
 
     const [imageURIs, setImageURIs] = useState([]);
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
-
-    const pickImage = async () => {
-        if (!mediaLibraryStatus.granted) {
-            mediaLibraryRequestPermissions();
-        }
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [3, 3],
-            quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.canceled) {
-            setImageURIs([...imageURIs, result.assets[0].uri]);
-        }
-    };
-
-    const takeImage = async () => {
-        if (!cameraStatus.granted) {
-            cameraRequestPermissions();
-        }
-        let result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [3, 3],
-            quality: 1,
-        });
-
-        console.log(result);
-
-        if (!result.canceled) {
-            setImageURIs([...imageURIs, result.assets[0].uri]);
-        }
-    };
-
 
     const submitFood = async () => {
         if (foodName == "") {
@@ -114,7 +75,7 @@ export default function CreateFood() {
 
         await Promise.all(imageURIs.map(async (image, index) => {
             try {
-                const promise = await uploadImage(image, `review-${userId}-${foodId}-${index}.${image.split('.').pop()}`);
+                const promise = await uploadImage(image, `review-${userId}-${foodId}-${index}.${image.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_REVIEWS_BUCKET_NAME);
                 const url = promise.Location;
                 imageUrls.push(url);
             } catch (e) {
@@ -194,21 +155,7 @@ export default function CreateFood() {
                 <Text style={styles.labelText}>Body</Text>
                 <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
                 <Text style={styles.labelText}>Upload Photo(s)</Text>
-                <Modal visible={imagePickerModalVisible} animationType='fade' transparent>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalContentContainer}>
-                            <TouchableOpacity onPress={pickImage}>
-                                <Text style={styles.labelText}>Pick From Library</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={takeImage}>
-                                <Text style={styles.labelText}>Take Photo</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setImagePickerModalVisible(false)}>
-                                <Text style={styles.labelText}>X</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <ImagePickerModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible} handleNewImageURI={(newImageURI) => setImageURIs([...imageURIs, newImageURI])} />
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                     <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
                         <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>

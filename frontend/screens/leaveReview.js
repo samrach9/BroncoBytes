@@ -89,7 +89,7 @@ export default function LeaveReview({route}) {
 
         await Promise.all(imageURIs.map(async (image, index) => {
             try {
-                const promise = await uploadImage(image, `review-${userId}-${foodId}-${index}.${image.split('.').pop()}`);
+                const promise = await uploadImage(image, `review-${userId}-${foodId}-${index}.${image.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_REVIEWS_BUCKET_NAME);
                 const url = promise.Location;
                 imageUrls.push(url);
             } catch (e) {

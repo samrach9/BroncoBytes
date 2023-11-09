@@ -80,6 +80,8 @@ def lambda_handler(event, context):
         item['username'] = {'S': body['username']}
         if 'admin' in body:
             item['admin'] = {'BOOL': body['admin']}
+        if 'photoUrl' in body:
+            item['photoUrl'] = {'S': body['photoUrl']}
     else:
         if email_taken(body['email'], db_client, DYNAMODB_TABLE):
             return email_already_exists_response

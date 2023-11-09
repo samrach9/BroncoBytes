@@ -457,6 +457,9 @@ Resources:
   foodReviewBucket:
     Type: AWS::S3::Bucket
 
+  userPhotoBucket:
+    Type: AWS::S3::Bucket
+
 Outputs:
   foodReviewApi:
     Description: API Gateway endpoint URL for prod stage

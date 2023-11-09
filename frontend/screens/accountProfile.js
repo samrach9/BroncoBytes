@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Button, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { FoodContext } from '../App';
+import { Image } from 'expo-image';
 import * as Crypto from 'expo-crypto';
 import { Footer } from '../components/footer';
 import { BigRectangleButton } from '../components/bigRectangleButton';
@@ -10,6 +10,7 @@ import * as SecureStore from 'expo-secure-store';
 import { CustomModal } from '../components/customModal';
 import updateUser from '../api/updateUser';
 import removeUser from '../api/removeUser';
+import { ImagePickerModal } from '../components/imagePickerModal';
 
 // options shift f
 export default function Navigation() {
@@ -103,6 +104,36 @@ export default function Navigation() {
         )
     }
 
+    function ChangeProfilePhotoModal() {
+
+        const handleNewImageURI = async (uri) => {
+            var url = null;
+
+            navigation.navigate('Loading')
+            setChangeProfilePhotoModalVisible(false);
+
+            try {
+                const promise = await uploadImage(uri, `${user.userId}.${uri.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_USERS_BUCKET_NAME);
+                url = promise.Location;
+            } catch (e) {
+                navigation.navigate('Account Profile')
+                setChangeProfilePhotoModalVisible(true);
+                alert("Error uploading image.");
+                console.warn(e);
+                return;
+            }
+
+            const updatedUser = { ...user, photoUrl: url };
+            if (await handleSubmit(updatedUser)) {
+                setChangeProfilePhotoModalVisible(false);
+            }
+        }
+
+        return (
+            <ImagePickerModal visible={changeProfilePhotoModalVisible} setVisible={setChangeProfilePhotoModalVisible} handleNewImageURI={handleNewImageURI}/>
+        )
+    }
+
     function DeleteAccountModal() {
         const [password, setPassword] = useState('');
 
@@ -168,7 +199,13 @@ export default function Navigation() {
             <View style={styles.contentContainer}>
                 <View style={styles.userInformationContainer}>
                     <View style={styles.profileIconContainer}>
-                        <Text style={styles.circle}></Text>
+                        {('photoUrl' in user && user.photoUrl) ? 
+                            <Image source={{ uri: user.photoUrl }} style={styles.circle} />
+                            :   
+                            <View style={styles.circle}>
+                                <Text style={{width: 100, textAlign: 'center'}}>Upload a photo below</Text>
+                            </View>
+                            }
                     </View>
                     <View style={styles.myProfileTextContainer}>
                         <Text style={styles.chooseHallText}>{user.username}</Text>
@@ -176,13 +213,14 @@ export default function Navigation() {
                 </View>
                 <View style={styles.buttonContainer}>
                     <BigRectangleButton text='Change Name' onClick={() => setChangeNameModalVisible(true)} />
-                    <ChangeNameModal/>
+                    <ChangeNameModal />
                     <BigRectangleButton text='Change Password' onClick={() => setChangePasswordModalVisible(true)} />
-                    <ChangePasswordModal/>
-                    <BigRectangleButton text='Edit Profile Photo' onClick={() => setChangeProfilePhotoModalVisible(true)} />
+                    <ChangePasswordModal />
+                    <BigRectangleButton text='Change Profile Photo' onClick={() => setChangeProfilePhotoModalVisible(true)} />
+                    <ChangeProfilePhotoModal />
                     <BigRectangleButton text='View My Reviews' onClick={() => navigation.navigate('Navigation')} />
                     <BigRectangleButton text='Delete Account' onClick={() => setDeleteAccountModalVisible(true)} />
-                    <DeleteAccountModal/>
+                    <DeleteAccountModal />
                 </View>
                 <View style={styles.logOutContainer}>
                     <Pressable style={styles.chooseHallText}
@@ -242,15 +280,16 @@ const styles = StyleSheet.create({
     },
     profileIconContainer: {
         marginTop: 60,
-        alignItems: 'flex-start',
     },
     circle: {
-        borderRadius: '75%',
+        borderRadius: 75,
         borderColor: 'black',
         borderWidth: 2,
         width: 150,
         height: 150,
         marginBottom: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     logOutContainer: {
         marginTop: 30,
