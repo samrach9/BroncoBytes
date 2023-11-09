@@ -1,16 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import removeReview from '../api/removeReview';
+import { CustomModal } from './customModal';
 
 export default function ReviewCard(props) {
 
     const navigation = useNavigation();
     const review = props.review;
     const { allFood, setAllFood } = useContext(FoodContext);
+    const [confirmRemoveModalVisible, setConfirmRemoveModalVisible] = useState(false);
 
     const handleRemoveReview = async () => {
         navigation.navigate('Loading');
@@ -49,10 +51,15 @@ export default function ReviewCard(props) {
                 </View>
                 { 
                     props.canRemove && 
-                    <TouchableOpacity onPress={() => handleRemoveReview()}>
+                    <TouchableOpacity onPress={() => setConfirmRemoveModalVisible(true)}>
                         <Text style={styles.removeText}>Remove</Text>
                     </TouchableOpacity>
                 }
+                <CustomModal visible={confirmRemoveModalVisible} setVisible={setConfirmRemoveModalVisible}>
+                    <TouchableOpacity onPress={() => handleRemoveReview()}>
+                        <Text style={styles.modalText}>Confirm Remove</Text>
+                    </TouchableOpacity>
+                </CustomModal>
             </View>
         </TouchableOpacity>
     )
@@ -124,5 +131,12 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         marginTop: 10,
-    }
+    },
+    modalText: {
+        fontFamily: 'Bungee',
+        fontSize: 20,
+        color: 'white',
+        textAlign: 'center',
+        padding: 10,
+    },
 });

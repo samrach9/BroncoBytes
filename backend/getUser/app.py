@@ -59,7 +59,9 @@ def lambda_handler(event, context):
             return username_or_email_not_found_response
         item = response['Items'][0]
         respBody = json_db.loads(item)
-        if respBody['password'] != body['password']:
+        if 'password' not in body:
+            respBody.pop('password', None)
+        elif respBody['password'] != body['password']:
             return incorrect_password_response
     elif 'email' in body:
         response = db_client.query(
@@ -72,9 +74,11 @@ def lambda_handler(event, context):
         )
         if len(response['Items']) == 0:
             return username_or_email_not_found_response
-        item = response['Item'][0]
+        item = response['Items'][0]
         respBody = json_db.loads(item)
-        if respBody['password'] != body['password']:
+        if 'password' not in body:
+            respBody.pop('password', None)
+        elif respBody['password'] != body['password']:
             return incorrect_password_response
 
     

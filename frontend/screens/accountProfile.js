@@ -5,24 +5,27 @@ import { Image } from 'expo-image';
 import * as Crypto from 'expo-crypto';
 import { Footer } from '../components/footer';
 import { BigRectangleButton } from '../components/bigRectangleButton';
-import { FoodContext, UserContext } from '../App';
+import { SmallRectangleButton } from '../components/smallRectangleButton';
+import { UserContext } from '../App';
 import * as SecureStore from 'expo-secure-store';
 import { CustomModal } from '../components/customModal';
 import updateUser from '../api/updateUser';
 import removeUser from '../api/removeUser';
 import { ImagePickerModal } from '../components/imagePickerModal';
 import getReviewsByUser from '../api/getReviewsByUser';
+import getUserByEmail from '../api/getUserByEmail';
+import getUserByUsername from '../api/getUserByUsername';
 
 // options shift f
-export default function Navigation() {
+export default function AccountProfile() {
 
     const navigation = useNavigation();
-    const { allFoods, setAllFoods } = useContext(FoodContext);
     const { user, setUser } = useContext(UserContext);
     const [changeNmeModalVisible, setChangeNameModalVisible] = useState(false);
     const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
     const [changeProfilePhotoModalVisible, setChangeProfilePhotoModalVisible] = useState(false);
     const [deleteAccountModalVisible, setDeleteAccountModalVisible] = useState(false);
+    const [addAdminModalVisible, setAddAdminModalVisible] = useState(false);
 
     const handleSubmit = async (user) => {
         navigation.navigate('Loading')
@@ -42,6 +45,10 @@ export default function Navigation() {
         const [newName, setNewName] = useState('');
 
         const handleNameSubmit = async () => {
+            if (newName === '') {
+                alert("Please enter a name.");
+                return;
+            }
             const updatedUser = { ...user, username: newName };
             if (await handleSubmit(updatedUser)) {
                 setChangeNameModalVisible(false);
@@ -69,6 +76,10 @@ export default function Navigation() {
         const [confirmPassword, setConfirmPassword] = useState('');
 
         const handlePasswordSubmit = async () => {
+            if (newPassword === '' || confirmPassword === '') {
+                alert("Please enter a password.");
+                return;
+            }
             if (newPassword !== confirmPassword) {
                 alert("Passwords do not match.");
                 return;
@@ -152,6 +163,10 @@ export default function Navigation() {
         const [password, setPassword] = useState('');
 
         const handleDeleteAccount = async () => {
+            if (password === '') {
+                alert("Please enter a password.");
+                return;
+            }
             const userPassword = await SecureStore.getItemAsync("password");
             const hashedPassword = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, password + process.env.EXPO_PUBLIC_SALT);
             if (hashedPassword !== userPassword) {
@@ -191,7 +206,88 @@ export default function Navigation() {
         )
     }
 
-    const logOut = async () => {
+    function AddAdminModal() {
+        const [password, setPassword] = useState('');
+        const [newAdmin, setNewAdmin] = useState('');
+        
+        const handleAddAdmin = async () => {
+            if (hashedPassword !== userPassword) {
+                alert("Incorrect password.");
+                return;
+            }
+
+            const userPassword = await SecureStore.getItemAsync("password");
+            const hashedPassword = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, password + process.env.EXPO_PUBLIC_SALT);
+
+            if (newAdmin === '') {
+                alert("Please enter a username or email.");
+                return;
+            }
+
+            let newAdminUser = null;
+            const emailRegex = /\S+@\S+\.\S+/;
+
+            try {
+                navigation.navigate('Loading');
+                setAddAdminModalVisible(false);
+                let result = null;
+                if (emailRegex.test(newAdmin)) {
+                    result = await getUserByEmail(newAdmin);
+                } else {
+                    result = await getUserByUsername(newAdmin);
+                }
+                if ('error' in result) {
+                    navigation.navigate('Account Profile');
+                    setAddAdminModalVisible(true);
+                    alert(result.error);
+                    return;
+                }
+                newAdminUser = result.user;
+            } catch (e) {
+                navigation.navigate('Account Profile');
+                setAddAdminModalVisible(true);
+                alert("Error finding user.");
+                return;
+            }                
+
+            newAdminUser.admin = true;
+            const result = await updateUser(newAdminUser);
+            navigation.navigate('Account Profile');
+            if ("error" in result) {
+                setAddAdminModalVisible(true);
+                alert(result.error);
+                return false;
+            } else {
+                setAddAdminModalVisible(false);
+            }
+        }
+
+        return (
+            <CustomModal visible={addAdminModalVisible} setVisible={setAddAdminModalVisible}>
+                <View style={styles.contentContainer}>
+                    <Text style={styles.labelText}>Add Admin</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter your password"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={true}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter username or email of new admin"
+                        value={newAdmin}
+                        onChangeText={setNewAdmin}
+                    />
+                    <TouchableOpacity onPress={handleAddAdmin}>
+                        <Text style={styles.labelText}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            </CustomModal>
+        )
+    }
+
+    async function logOut() {
         navigation.navigate('Loading')
         try {
             await SecureStore.deleteItemAsync("user");
@@ -235,6 +331,11 @@ export default function Navigation() {
                     <BigRectangleButton text='View My Reviews' onClick={() => viewUserReviews()} />
                     <BigRectangleButton text='Delete Account' onClick={() => setDeleteAccountModalVisible(true)} />
                     <DeleteAccountModal />
+                    {
+                        user.admin &&
+                        <SmallRectangleButton text='Add Admin' onClick={() => setAddAdminModalVisible(true)} />
+                    }
+                    <AddAdminModal />
                 </View>
                 <View style={styles.logOutContainer}>
                     <Pressable style={styles.chooseHallText}

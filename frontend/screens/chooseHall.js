@@ -40,13 +40,12 @@ export default function ChooseHall() {
             </View>
             <Footer
                 leftButtonText={"Back"}
-                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                leftButtonPress={() => navigation.navigate('Home')}
                 iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Review"}
                 rightButtonPress={() => navigation.navigate('Leave Review')}
             />
         </View>
-
     )
 }
 
