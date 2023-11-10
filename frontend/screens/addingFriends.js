@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Image, Pressable, Button, ScrollView } from 're
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
+import {TextButton} from '../components/smallRectangleButton';
 import { Footer } from '../components/footer';
-import { SmallRectangleButton } from '../components/smallRectangleButton';
 
-export default function Friends() {
+export default function AddingFriends() {
 
     const navigation = useNavigation();
     const { allFood, setAllFood } = useContext(FoodContext);
@@ -14,12 +14,12 @@ export default function Friends() {
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <TopBar text={"Friends"} />
+                <TopBar text={"Find New Friends"} />
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={styles.miscButtons}>
                             <Text style={styles.miscText}>Newest</Text>
-                            <SmallRectangleButton text='Add Friends' onClick={() => navigation.navigate('Adding Friends')} />
+                            <Text>Add Friends Buttooon</Text>
                         </View>
                         <View style={styles.friendIconsContainer}>
                             <View style={styles.friendIconRowContainer}>
