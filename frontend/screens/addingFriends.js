@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Image, Pressable, Button, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
-import {TextButton} from '../components/smallRectangleButton';
+import {SmallRectangleButton} from '../components/smallRectangleButton';
 import { Footer } from '../components/footer';
 
 export default function AddingFriends() {
 
     const navigation = useNavigation();
     const { allFood, setAllFood } = useContext(FoodContext);
+
+    const [isActive, setIsActive] = useState(false);
+
+    const onPressLearnMore = () =>{
+      setIsActive(true);
+    }
 
     return (
         <View style={styles.container}>
@@ -18,8 +24,10 @@ export default function AddingFriends() {
                 <ScrollView>
                     <View style={styles.content}>
                         <View style={styles.miscButtons}>
-                            <Text style={styles.miscText}>Newest</Text>
-                            <Text>Add Friends Buttooon</Text>
+                            <SmallRectangleButton text='Import From Contacts' onClick={() => navigation.navigate('')} />
+                        </View>
+                        <View style={styles.miscButtons}>
+                            <Text style={styles.miscText}>     Suggested Friends</Text>
                         </View>
                         <View style={styles.friendIconsContainer}>
                             <View style={styles.friendIconRowContainer}>
@@ -28,6 +36,17 @@ export default function AddingFriends() {
 
                                     </View>
                                     <Text style={styles.friendText}>Post Malone</Text>
+                                    <View style={styles.followButton}>
+
+                                        <Button
+                                        onPress={onPressLearnMore}
+                                        color={ isActive ? "black" : "white"}
+                                        title={ isActive ? "Followed" : "Follow"}
+                                        backgroundColor={ isActive ? "white" : "black"}
+                                        />
+
+                                    </View>
+                                    
                                 </View>
                                 <View style={styles.friendIcon}>
                                     <View style={styles.circle}>
@@ -73,6 +92,16 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
     },
+
+    followButton: {
+        width: 100,
+        padding: 1,
+        borderRadius: 20,
+        margin: 3,
+        backgroundColor: "white",
+        
+    },
+
     miscButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
