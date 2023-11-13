@@ -113,6 +113,9 @@ export default function LeaveReview({route}) {
 
         await setAllFood(allFood.map((food) => {
             if (food.foodId == foodId) {
+                if(!('reviews' in food)) {
+                    food.reviews = [];
+                }
                 food.reviews.push(review);
                 return food;
             } else {
