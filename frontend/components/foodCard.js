@@ -6,6 +6,7 @@ import getReviewsByFood from '../api/getReviewsByFood';
 import getUserById from '../api/getUserById';
 import { FoodContext } from '../App';
 import { useNavigation } from '@react-navigation/native';
+import { AutoScaling } from 'aws-sdk';
 
 export default function FoodCard(props) {
 
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     ratingCard: {
-        height: 400,
+        height: "auto",
         width: 300,
         backgroundColor: '#850529',
         margin: 50,
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
         flex: 9,
         alignItems: 'center',
         marginBottom: 5,
+        padding: 10
     },
     starContainer: {
         flex: 1,
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10
     },
     submittedText: {
         fontFamily: 'Bungee',
@@ -133,6 +136,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         aspectRatio: 1,
+        borderRadius: 10
     },
     cardTitleContainer: {
         marginBottom: 10,
