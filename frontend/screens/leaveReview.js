@@ -156,7 +156,7 @@ export default function LeaveReview({route}) {
                 <Text style={styles.labelText}>Title</Text>
                 <TextInput style={styles.titleInput} onChangeText={setTitle} value={title} placeholder='Title your review' />
                 <Text style={styles.labelText}>Body</Text>
-                <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
+                <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} maxLength={400}/>
                 <Text style={styles.labelText}>Upload Photo(s)</Text>
                 <CustomModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible}>
                             <TouchableOpacity onPress={pickImage}>

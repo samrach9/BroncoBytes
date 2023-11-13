@@ -26,12 +26,21 @@ export default function ReviewCard(props) {
         navigation.pop();
     }
 
+    const firstImage = review.imageUrls.length > 0 ? review.imageUrls[0] : null;
+
     return (
         <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Review Page', {review: review})}>
             <View style={styles.ratingCard}>
                 <View style={styles.cardTitleContainer}>
                     <Text style={styles.cardTitle}>{review.title}</Text>
                 </View>
+                {
+                        firstImage &&
+                        <View style={styles.foodImageContainer}>
+                            <Image source={{ uri: firstImage }}
+                                style={styles.foodImage} />
+                        </View>
+                    }
                 <View style={styles.starContainer}>
                     <Text style={styles.ratingText}>Rating: </Text>
                     <Rating
@@ -70,7 +79,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     ratingCard: {
-        height: 400,
+        height: "auto",
         width: 300,
         backgroundColor: '#850529',
         margin: 50,
@@ -85,6 +94,7 @@ const styles = StyleSheet.create({
         flex: 9,
         alignItems: 'center',
         marginBottom: 5,
+        padding: 10
     },
     starContainer: {
         flex: 1,
@@ -99,6 +109,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10
     },
     submittedText: {
         fontFamily: 'Bungee',
@@ -109,6 +120,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         aspectRatio: 1,
+        borderRadius: 10
     },
     cardTitleContainer: {
         marginBottom: 10,
@@ -124,7 +136,7 @@ const styles = StyleSheet.create({
     },
     notesText: {
         fontSize: 10,
-        color: 'white'
+        color: 'white',
     },
     removeText: {
         fontFamily: 'Bungee',
