@@ -23,6 +23,9 @@ export default function FoodCard(props) {
             if (!('reviews' in food)) {
                 food.reviews = await getReviewsByFood(food.foodId);
             }
+            if (!(food.reviews)) {
+                food.reviews = [];
+            }
             for (let i = 0; i < food.reviews.length; i++) {
                 if (!('user' in food.reviews[i])) {
                     food.reviews[i].user = await getUserById(food.reviews[i].userId);
@@ -64,7 +67,7 @@ export default function FoodCard(props) {
                     </View>
                 }
                 {
-                    'reviews' in food && food.reviews.length > 0 &&
+                    'reviews' in food && food.reviews && food.reviews.length > 0 &&
                     <>
                         <View style={styles.starContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
@@ -78,10 +81,10 @@ export default function FoodCard(props) {
                             />
                         </View>   
                         <View style={styles.notesContainer}>
-                            <Text style={styles.notesText}>{'reviews' in food && food.reviews.length > 0 && food.reviews[0].body}</Text>
+                            <Text style={styles.notesText}>{'reviews' in food && food.reviews && food.reviews.length > 0 && food.reviews[0].body}</Text>
                         </View>
                         <View style={styles.submittedContainer}>
-                            <Text style={styles.submittedText}>- Submitted { 'user' in food.reviews[0] && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
+                            <Text style={styles.submittedText}>- Submitted { 'user' in food.reviews[0] && food.reviews[0].user && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
                         </View>
                     </>
                 }
