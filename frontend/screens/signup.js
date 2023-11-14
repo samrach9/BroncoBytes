@@ -14,6 +14,7 @@ export default function SignUp() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordShown, setPasswordShown] = useState(false);
 
     const submitSignup = async () => {
@@ -29,13 +30,18 @@ export default function SignUp() {
             alert("Password cannot be empty.");
             return;
         }
-        
+
+        if(password != confirmPassword){
+            alert("Passwords are not the same.");
+            return;
+        }
+
         const emailRegex = /\S+@\S+\.\S+/;
         if (emailRegex.test(username)) {
             alert("Username cannot be an email address.");
             return;
         }
-        
+
         if (!emailRegex.test(email)) {
             alert("Invalid email address.");
             return;
@@ -43,7 +49,7 @@ export default function SignUp() {
             alert("Email address must be an SCU email address.");
             return;
         }
-        
+
         const hashedPassword = await Crypto.digestStringAsync(
             Crypto.CryptoDigestAlgorithm.SHA256, password + process.env.EXPO_PUBLIC_SALT);
 
@@ -66,7 +72,7 @@ export default function SignUp() {
             navigation.reset(
                 {
                     index: 1,
-                    routes: [{ name: 'Login' }, { name: 'Sign Up'}],
+                    routes: [{ name: 'Login' }, { name: 'Sign Up' }],
                 }
             )
             alert(result.error);
@@ -84,51 +90,56 @@ export default function SignUp() {
 
     return (
         <View style={styles.container}>
-            <TopBar text={"Signup"} />
             <KeyboardAvoidingView style={styles.content} behavior='position' keyboardVerticalOffset={-50}>
-                <Text style={styles.label}>Username</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={text => setUsername(text)}
-                    value={username}
-                    autoComplete='off'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    keyboardType={Platform.OS === 'ios' ? 'ascii-capable' : 'visible-password'}
-                />
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={text => setEmail(text)}
-                    value={email}
-                    autoComplete='email'
-                    autoCorrect={false}
-                    autoCapitalize='none'
-                    keyboardType='email-address'
-                />
-                <Text style={styles.label}>Password</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={text => setPassword(text)}
-                    secureTextEntry={!passwordShown}
-                    value={password}
-                    autoCapitalize='none'
-                    autoComplete='new-password'
-                    autoCorrect={false}
-                />
-                <TouchableOpacity style={styles.showPass} onPress={() => setPasswordShown(!passwordShown)}>
-                    <Text style={styles.label}>{passwordShown ? "Hide Password" : "Show Password"}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.signup} onPress={submitSignup}>
-                    <Text style={styles.signupText}>Sign Up</Text>
-                </TouchableOpacity>
+                <Text style={styles.headerText}>Create an Account</Text>
+                <View style={styles.inputsContainer}>
+                    <Text style={styles.generalText}>Enter School Email</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={text => setEmail(text)}
+                        value={email}
+                        autoComplete='email'
+                        autoCorrect={false}
+                        autoCapitalize='none'
+                        keyboardType='email-address'
+                    />
+                    <Text style={styles.generalText}>Create a username</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={text => setUsername(text)}
+                        value={username}
+                        autoComplete='off'
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        keyboardType={Platform.OS === 'ios' ? 'ascii-capable' : 'visible-password'}
+                    />
+                    <Text style={styles.generalText}>Choose a password</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={text => setPassword(text)}
+                        secureTextEntry={!passwordShown}
+                        value={password}
+                        autoCapitalize='none'
+                        autoComplete='new-password'
+                        autoCorrect={false}
+                    />
+                    <Text style={styles.generalText}>Confirm Password</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={text => setConfirmPassword(text)}
+                        secureTextEntry={!passwordShown}
+                        value={confirmPassword}
+                        autoCapitalize='none'
+                        autoComplete='new-password'
+                        autoCorrect={false}
+                    />
+                </View>
+                <View style={styles.signUpContainer}>
+                    <TouchableOpacity style={styles.login} onPress={submitSignup}>
+                        <Text style={styles.loginText}>Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
             </KeyboardAvoidingView>
-            <Footer
-                leftButtonText={""}
-                leftButtonPress={() => {}}
-                rightButtonText={"Login"}
-                rightButtonPress={() => navigation.navigate('Login')}
-            />
         </View>
     )
 }
@@ -147,22 +158,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     input: {
-        height: 40,
-        width: 300,
+        height: 45,
+        width: 250,
         margin: 12,
-        borderWidth: 1,
         padding: 10,
-        color: 'white',
-        borderColor: 'white',
+        backgroundColor: 'white',
+        borderRadius: 25,
     },
     content: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         alignContent: 'center',
-    },
-    showPass: {
-        marginBottom: 10,
     },
     signup: {
         alignItems: "center",
@@ -173,5 +180,38 @@ const styles = StyleSheet.create({
         color: "#B30738",
         fontFamily: "Bungee",
         fontSize: 20,
-    }
+    },
+    headerText: {
+        color: 'white',
+        fontSize: 40,
+        fontFamily: 'Bungee',
+        textAlign: 'center',
+    },
+    inputsContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 35,
+    },
+    generalText: {
+        fontFamily: 'Bungee',
+        color: 'white',
+        fontSize: 16,
+    },
+    signUpContainer: {
+        alignItems: 'center',
+        margin: 0,
+    },
+    login: {
+        alignItems: "center",
+        backgroundColor: '#850529',
+        padding: 10,
+        borderRadius: 25,
+        width: 250,
+    },
+    loginText: {
+        color: "white",
+        fontFamily: "Bungee",
+        fontSize: 20,
+        padding: 7,
+    },
 });
