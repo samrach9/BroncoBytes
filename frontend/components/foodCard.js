@@ -81,7 +81,7 @@ export default function FoodCard(props) {
                             <Text style={styles.notesText}>{'reviews' in food && food.reviews.length > 0 && food.reviews[0].body}</Text>
                         </View>
                         <View style={styles.submittedContainer}>
-                            <Text style={styles.submittedText}>- Submitted { 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
+                            <Text style={styles.submittedText}>- Submitted { 'user' in food.reviews[0] && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
                         </View>
                     </>
                 }

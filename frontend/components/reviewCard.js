@@ -20,6 +20,14 @@ export default function ReviewCard(props) {
         setAllFood(allFood.map((item) => {
             if (item.foodId == review.foodId) {
                 item.reviews = item.reviews.filter((item) => item.reviewId != review.reviewId);
+                if('imageUrls' in review && review.imageUrls.length > 0) {
+                    item.imageUrls = item.imageUrls.filter((item) => !review.imageUrls.includes(item));
+                }
+                if(item.reviews.length == 0) {
+                    item.rating = 0;
+                } else {
+                    item.rating = (item.rating * (item.reviews.length + 1) - review.rating) / item.reviews.length;
+                }
             }
             return item;
         }));

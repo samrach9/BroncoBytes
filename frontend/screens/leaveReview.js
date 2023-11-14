@@ -89,7 +89,8 @@ export default function LeaveReview({route}) {
 
         await Promise.all(imageURIs.map(async (image, index) => {
             try {
-                const promise = await uploadImage(image, `review-${userId}-${foodId}-${index}.${image.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_REVIEWS_BUCKET_NAME);
+                const timestamp = Date.now() / 1000;
+                const promise = await uploadImage(image, `review_${userId}_${foodId}_${timestamp}_${index}.${image.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_REVIEWS_BUCKET_NAME);
                 const url = promise.Location;
                 imageUrls.push(url);
             } catch (e) {
@@ -117,6 +118,11 @@ export default function LeaveReview({route}) {
                     food.reviews = [];
                 }
                 food.reviews.push(review);
+                if(!('imageUrls' in food)) {
+                    food.imageUrls = [];
+                }
+                food.imageUrls = food.imageUrls.concat(imageUrls);
+                food.rating = (food.rating * (food.reviews.length - 1) + rating) / food.reviews.length;
                 return food;
             } else {
                 return food;
