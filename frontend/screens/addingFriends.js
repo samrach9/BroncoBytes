@@ -1,73 +1,35 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, Button, ScrollView, TextInput} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import { TopBar } from '../components/topBar';
 import {SmallRectangleButton} from '../components/smallRectangleButton';
 import { Footer } from '../components/footer';
+import { NewFriends } from '../components/newFriends';
 
 export default function AddingFriends() {
 
     const navigation = useNavigation();
-    const { allFood, setAllFood } = useContext(FoodContext);
-
-    const [isActive, setIsActive] = useState(false);
-
-    const onPressLearnMore = () =>{
-      setIsActive(true);
-    }
 
     return (
         <View style={styles.container}>
             <View style={styles.contentContainer}>
                 <TopBar text={"Find New Friends"} />
                 <ScrollView>
+                    <View style={styles.searchBarContainer}>
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Search..."
+                        />
+                    </View>
                     <View style={styles.content}>
                         <View style={styles.miscButtons}>
-                            <SmallRectangleButton text='Import From Contacts' onClick={() => navigation.navigate('')} />
+                            <Text style={styles.miscText}>Suggested Friends</Text>
                         </View>
-                        <View style={styles.miscButtons}>
-                            <Text style={styles.miscText}>     Suggested Friends</Text>
-                        </View>
+
                         <View style={styles.friendIconsContainer}>
                             <View style={styles.friendIconRowContainer}>
-                                <View style={styles.friendIcon}>
-                                    <View style={styles.circle}>
-
-                                    </View>
-                                    <Text style={styles.friendText}>Post Malone</Text>
-                                    <View style={styles.followButton}>
-
-                                        <Button
-                                        onPress={onPressLearnMore}
-                                        color={ isActive ? "black" : "white"}
-                                        title={ isActive ? "Followed" : "Follow"}
-                                        backgroundColor={ isActive ? "white" : "black"}
-                                        />
-
-                                    </View>
-                                    
-                                </View>
-                                <View style={styles.friendIcon}>
-                                    <View style={styles.circle}>
-
-                                    </View>
-                                    <Text style={styles.friendText}>Doja Cat</Text>
-                                </View>
-                            </View>
-                            <View style={styles.friendIconRowContainer}>
-                                <View style={styles.friendIcon}>
-                                    <View style={styles.circle}>
-
-                                    </View>
-                                    <Text style={styles.friendText}>Post Malone</Text>
-                                </View>
-                                <View style={styles.friendIcon}>
-                                    <View style={styles.circle}>
-
-                                    </View>
-                                    <Text style={styles.friendText}>Doja Cat</Text>
-                                </View>
+                                
                             </View>
                         </View>
                     </View>
@@ -81,8 +43,9 @@ export default function AddingFriends() {
                 rightButtonPress={() => navigation.navigate('Leave Review')}
             />
         </View>
-    )
+    );
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -92,7 +55,17 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
     },
-
+    searchBarContainer: {
+        backgroundColor: '#B30738',
+        padding: 20,
+      },
+      searchInput: {
+        height: 40,
+        borderColor: 'white',
+        borderWidth: 3,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+      },
     followButton: {
         width: 100,
         padding: 1,
