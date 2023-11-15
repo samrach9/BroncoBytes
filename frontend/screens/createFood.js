@@ -75,7 +75,8 @@ export default function CreateFood() {
 
         await Promise.all(imageURIs.map(async (image, index) => {
             try {
-                const promise = await uploadImage(image, `review-${userId}-${foodId}-${index}.${image.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_REVIEWS_BUCKET_NAME);
+                const timestamp = Date.now() / 1000;
+                const promise = await uploadImage(image, `review-${userId}_${foodId}_${timestamp}_${index}.${image.split('.').pop()}`, process.env.EXPO_PUBLIC_S3_REVIEWS_BUCKET_NAME);
                 const url = promise.Location;
                 imageUrls.push(url);
             } catch (e) {

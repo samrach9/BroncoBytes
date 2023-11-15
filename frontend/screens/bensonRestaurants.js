@@ -6,7 +6,7 @@ import { Footer } from '../components/footer';
 import { TopBar } from '../components/topBar';
 import { bensonRestaurants } from '../enum/bensonRestaurants';
 import { BigRectangleButton } from '../components/bigRectangleButton';
-import { SquareTile } from '../components/squareTile';
+import { SquareTile } from '../components/arrowButton';
 
 export default function BensonRestaurants() {
 

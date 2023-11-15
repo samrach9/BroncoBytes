@@ -6,6 +6,7 @@ import getReviewsByFood from '../api/getReviewsByFood';
 import getUserById from '../api/getUserById';
 import { FoodContext } from '../App';
 import { useNavigation } from '@react-navigation/native';
+import { AutoScaling } from 'aws-sdk';
 
 export default function FoodCard(props) {
 
@@ -21,6 +22,9 @@ export default function FoodCard(props) {
         const getReviews = async () => {
             if (!('reviews' in food)) {
                 food.reviews = await getReviewsByFood(food.foodId);
+            }
+            if (!(food.reviews)) {
+                food.reviews = [];
             }
             for (let i = 0; i < food.reviews.length; i++) {
                 if (!('user' in food.reviews[i])) {
@@ -63,7 +67,7 @@ export default function FoodCard(props) {
                     </View>
                 }
                 {
-                    'reviews' in food && food.reviews.length > 0 &&
+                    'reviews' in food && food.reviews && food.reviews.length > 0 &&
                     <>
                         <View style={styles.starContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
@@ -77,10 +81,10 @@ export default function FoodCard(props) {
                             />
                         </View>   
                         <View style={styles.notesContainer}>
-                            <Text style={styles.notesText}>{'reviews' in food && food.reviews.length > 0 && food.reviews[0].body}</Text>
+                            <Text style={styles.notesText}>{'reviews' in food && food.reviews && food.reviews.length > 0 && food.reviews[0].body}</Text>
                         </View>
                         <View style={styles.submittedContainer}>
-                            <Text style={styles.submittedText}>- Submitted { 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
+                            <Text style={styles.submittedText}>- Submitted { 'user' in food.reviews[0] && food.reviews[0].user && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
                         </View>
                     </>
                 }
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     ratingCard: {
-        height: 400,
+        height: "auto",
         width: 300,
         backgroundColor: '#850529',
         margin: 50,
@@ -109,6 +113,7 @@ const styles = StyleSheet.create({
         flex: 9,
         alignItems: 'center',
         marginBottom: 5,
+        padding: 10
     },
     starContainer: {
         flex: 1,
@@ -123,16 +128,17 @@ const styles = StyleSheet.create({
         flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10
     },
     submittedText: {
-        fontFamily: 'Bungee',
-        fontSize: 8,
+        fontSize: 10,
         color: '#db88a0'
     },
     foodImage: {
         width: '100%',
         height: '100%',
         aspectRatio: 1,
+        borderRadius: 10
     },
     cardTitleContainer: {
         marginBottom: 10,

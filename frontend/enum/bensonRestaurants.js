@@ -7,7 +7,10 @@ export const bensonRestaurants = {
     TheSlice: "The Slice",
     TheFireGrill: "The Fire Grill",
     SimplyOasis: "Simply Oasis",
-    TheChefsTable: "The Chefs Table",
-    Sushi: "Sushi",
+    TheChefsTable: "The Chef's Table",
+    Sushi: "Poke & Sushi",
+    Pacrim: "Pacrim",
+    TheGarden: "The Garden",
+    Stacks: "Stacks",
     Acai: "Acai"   
 }

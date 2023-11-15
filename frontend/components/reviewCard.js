@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Rating } from 'react-native-ratings';
@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import removeReview from '../api/removeReview';
 import { CustomModal } from './customModal';
+import { ArrowButton } from './arrowButton';
 
 export default function ReviewCard(props) {
 
@@ -20,11 +21,44 @@ export default function ReviewCard(props) {
         setAllFood(allFood.map((item) => {
             if (item.foodId == review.foodId) {
                 item.reviews = item.reviews.filter((item) => item.reviewId != review.reviewId);
+                if('imageUrls' in review && review.imageUrls.length > 0) {
+                    item.imageUrls = item.imageUrls.filter((item) => !review.imageUrls.includes(item));
+                }
+                if(item.reviews.length == 0) {
+                    item.rating = 0;
+                } else {
+                    item.rating = (item.rating * (item.reviews.length + 1) - review.rating) / item.reviews.length;
+                }
             }
             return item;
         }));
         navigation.pop();
     }
+
+    const firstImage = review.imageUrls.length > 0 ? review.imageUrls[0] : null;
+    const secondImage = review.imageUrls.length > 1 ? review.imageUrls[1] : null;
+    const thirdImage = review.imageUrls.length > 2 ? review.imageUrls[2] : null;
+
+    const [displayedImage, setDisplayedImage] = useState(firstImage);
+
+
+    const next = () => {
+        if (displayedImage === firstImage){
+            setDisplayedImage(secondImage);
+        }
+        else if (displayedImage === secondImage && thirdImage != null){
+            setDisplayedImage(thirdImage);
+        }
+    };
+
+    const prev = () => {
+        if (displayedImage === thirdImage){
+            setDisplayedImage(secondImage);
+        }
+        else if (displayedImage === secondImage){
+            setDisplayedImage(firstImage);
+        }
+    };
 
     return (
         <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Review Page', {review: review})}>
@@ -32,6 +66,19 @@ export default function ReviewCard(props) {
                 <View style={styles.cardTitleContainer}>
                     <Text style={styles.cardTitle}>{review.title}</Text>
                 </View>
+                {
+                    displayedImage &&
+                    <View style={styles.foodImageContainer}>
+                        <Image source={{ uri: displayedImage }} style={styles.foodImage} />
+                    </View>
+                }
+                {
+                    secondImage &&
+                    <View style={styles.oneRow}>
+                        <ArrowButton text="<" onClick={() => prev()} direction='left'/>
+                        <ArrowButton text=">" onClick={() => next()} direction='right'/>
+                    </View>
+                }
                 <View style={styles.starContainer}>
                     <Text style={styles.ratingText}>Rating: </Text>
                     <Rating
@@ -70,10 +117,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     ratingCard: {
-        height: 400,
+        height: "auto",
         width: 300,
         backgroundColor: '#850529',
-        margin: 50,
+        margin: 25,
         padding: 10,
         borderWidth: 2,
         borderColor: '#850529',
@@ -84,7 +131,8 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         flex: 9,
         alignItems: 'center',
-        marginBottom: 5,
+        //marginBottom: 5,
+        padding: 10
     },
     starContainer: {
         flex: 1,
@@ -99,16 +147,17 @@ const styles = StyleSheet.create({
         flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10
     },
     submittedText: {
-        fontFamily: 'Bungee',
-        fontSize: 8,
+        fontSize: 10,
         color: '#db88a0'
     },
     foodImage: {
         width: '100%',
         height: '100%',
         aspectRatio: 1,
+        borderRadius: 10
     },
     cardTitleContainer: {
         marginBottom: 10,
@@ -120,11 +169,11 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontFamily: 'Bungee',
-        color: 'white'
+        color: 'white',
     },
     notesText: {
         fontSize: 10,
-        color: 'white'
+        color: 'white',
     },
     removeText: {
         fontFamily: 'Bungee',
@@ -138,5 +187,16 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         padding: 10,
+    },
+    oneRow: {
+        flexDirection: 'row',
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    dots: {
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });

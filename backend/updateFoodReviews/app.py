@@ -10,6 +10,8 @@ def getFood(review, db_client, DYNAMODB_TABLE):
          'foodId':{'S': foodId}
       },
    )
+   if 'Item' not in response:
+      raise Exception('Food not found')
    return response['Item']  
 
 # updateFood
@@ -25,7 +27,11 @@ def lambda_handler(event, context):
 
    if eventName == 'INSERT':
       review = record['dynamodb']['NewImage']
-      food = getFood(review, db_client, DYNAMODB_TABLE)
+      try:
+         food = getFood(review, db_client, DYNAMODB_TABLE)
+      except Exception as e:
+         print(e)
+         return
       totalReviews = float(food['totalReviews']['N']) + 1
       reviewRating = float(review['rating']['N'])
       foodRating = float(food['rating']['N'])
@@ -36,7 +42,11 @@ def lambda_handler(event, context):
 
    elif eventName == 'REMOVE':
       review = record['dynamodb']['OldImage']
-      food = getFood(review, db_client, DYNAMODB_TABLE)
+      try:
+         food = getFood(review, db_client, DYNAMODB_TABLE)
+      except Exception as e:
+         print(e)
+         return
       totalReviews = float(food['totalReviews']['N']) - 1
       reviewRating = float(review['rating']['N'])
       foodRating = float(food['rating']['N'])
@@ -51,7 +61,11 @@ def lambda_handler(event, context):
    elif eventName == 'MODIFY':
       new_review = record['dynamodb']['NewImage']
       old_review = record['dynamodb']['OldImage']
-      food = getFood(new_review, db_client, DYNAMODB_TABLE)
+      try:
+         food = getFood(new_review, db_client, DYNAMODB_TABLE)
+      except Exception as e:
+         print(e)
+         return
       totalReviews = float(food['totalReviews']['N'])
       newReviewRating = float(new_review['rating']['N'])
       oldReviewRating = float(old_review['rating']['N'])
