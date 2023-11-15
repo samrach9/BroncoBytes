@@ -130,14 +130,12 @@ const styles = StyleSheet.create({
         marginLeft: 12,
     },
     input: {
-        height: 60,
+        height: 45,
         width: 250,
         margin: 12,
-        borderWidth: 1,
         padding: 10,
-        color: 'white',
-        borderColor: 'white',
         backgroundColor: 'white',
+        borderRadius: 25,
     },
     content: {
         flex: 1,
