@@ -32,10 +32,11 @@ export default function LeaveReview({ route }) {
     const [body, setBody] = useState("");
 
     const [imageURIs, setImageURIs] = useState([]);
-    const [tempImageURIs, setTempImageURIs] = useState([]);
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
-
     const [removeImageModalVisible, setRemoveImageModalVisible] = useState(false);
+
+    const [sliceIndex, setSliceIndex] = useState(3);
+    const [showingMoreImages, setShowingMoreImages] = useState(false);
 
     const pickImage = async () => {
         if (!mediaLibraryStatus.granted) {
@@ -218,17 +219,39 @@ export default function LeaveReview({ route }) {
                     <View style={styles.tagsContainer}>
                         <Text style={styles.labelText}>Tags</Text>
                         <View style={styles.tagRowContent}>
-                            <View style={styles.tagButton}>
-                                <Text style={styles.tagText}>Vegan</Text>
-                            </View>
-                            <View style={styles.tagButton}>
-                                <Text style={styles.tagText}>Vegetarian</Text>
-                            </View>
-                            <View style={styles.tagButton}>
-                                <Text style={styles.tagText}>Raw</Text>
-                            </View>
+                            {
+                                Object.keys(tags).slice(0, sliceIndex).map((key) => {
+                                    return (
+                                        <TouchableOpacity style={{ marginVertical: 5 }}>
+                                            <View style={styles.tagButton} onClick={console.log("Pressed")}>
+                                                <Text style={styles.tagText}>{tags[key]}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    );
+                                })
+                            }
                         </View>
-                        <Text style={styles.moreTagsText}>+ More Tags</Text>
+                        {
+                            showingMoreImages ?
+                                (
+                                    <TouchableOpacity onPress={() => {
+                                        setSliceIndex(3);
+                                        setShowingMoreImages(!showingMoreImages);
+                                    }}>
+                                        <Text style={styles.moreTagsText}>- Less Tags</Text>
+                                    </TouchableOpacity>
+                                )
+                                :
+                                (
+                                    <TouchableOpacity onPress={() => {
+                                        setSliceIndex(10);
+                                        setShowingMoreImages(!showingMoreImages);
+                                    }}>
+                                        <Text style={styles.moreTagsText}>+ More Tags</Text>
+                                    </TouchableOpacity>
+                                )
+                        }
+
                     </View>
                     <Text style={styles.labelText}>Leave a review</Text>
                     <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
@@ -267,6 +290,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         color: 'black',
         backgroundColor: 'white',
+        marginBottom: 20,
     },
     labelText: {
         fontFamily: 'Bungee',
@@ -295,9 +319,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     tagRowContent: {
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
+        flexWrap: 'wrap',
+
     },
     tagText: {
         fontFamily: 'Bungee',
