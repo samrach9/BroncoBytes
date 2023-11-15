@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
@@ -11,10 +11,14 @@ import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
 import { CustomModal } from '../components/customModal';
+import * as FileSystem from 'expo-file-system';
+import { tags } from '../enum/tags';
 
-export default function LeaveReview({route}) {
+export default function LeaveReview({ route }) {
 
     const navigation = useNavigation();
+    const [counter, setCounter] = useState(0);
+    const [globalIndex, setGlobalIndex] = useState(-1);
 
     const [mediaLibraryStatus, mediaLibraryRequestPermissions] = ImagePicker.useMediaLibraryPermissions();
     const [cameraStatus, cameraRequestPermissions] = ImagePicker.useCameraPermissions();
@@ -28,7 +32,10 @@ export default function LeaveReview({route}) {
     const [body, setBody] = useState("");
 
     const [imageURIs, setImageURIs] = useState([]);
+    const [tempImageURIs, setTempImageURIs] = useState([]);
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
+
+    const [removeImageModalVisible, setRemoveImageModalVisible] = useState(false);
 
     const pickImage = async () => {
         if (!mediaLibraryStatus.granted) {
@@ -46,6 +53,9 @@ export default function LeaveReview({route}) {
         if (!result.canceled) {
             setImageURIs([...imageURIs, result.assets[0].uri]);
         }
+        setImagePickerModalVisible(false);
+        setCounter(counter + 1);
+        console.log(counter);
     };
 
     const takeImage = async () => {
@@ -57,6 +67,7 @@ export default function LeaveReview({route}) {
             allowsEditing: true,
             aspect: [3, 3],
             quality: 1,
+
         });
 
         console.log(result);
@@ -64,6 +75,15 @@ export default function LeaveReview({route}) {
         if (!result.canceled) {
             setImageURIs([...imageURIs, result.assets[0].uri]);
         }
+        setImagePickerModalVisible(false);
+        setCounter(counter + 1);
+        console.log(counter);
+    };
+
+    const removeImage = async () => {
+        setImageURIs(imageURIs.filter((item) => item != imageURIs[globalIndex]));
+        console.log(imageURIs[globalIndex]);
+        setRemoveImageModalVisible(false);
     };
 
 
@@ -82,7 +102,7 @@ export default function LeaveReview({route}) {
             alert("Please enter a body");
             return;
         }
-        
+
         let imageUrls = [];
 
         navigation.navigate('Loading')
@@ -113,7 +133,7 @@ export default function LeaveReview({route}) {
 
         await setAllFood(allFood.map((food) => {
             if (food.foodId == foodId) {
-                if(!('reviews' in food)) {
+                if (!('reviews' in food)) {
                     food.reviews = [];
                 }
                 food.reviews.push(review);
@@ -139,42 +159,70 @@ export default function LeaveReview({route}) {
     return (
         <View style={styles.container}>
             <TopBar text={"Leave a Review"} />
-            <KeyboardAvoidingView style={styles.contentContainer} behavior='height'>
-                <RNPickerSelect
-                    value={foodId}
-                    onValueChange={(value) => setFoodId(value)}
-                    items={allFood.map(food => ({ label: food.name, value: food.foodId }))}
-                    style={pickerSelectStyles}
-                />
-                <Text style={styles.labelText}>Rating</Text>
-                <Rating
-                    onFinishRating={setRating}
-                    startingValue={2.5}
-                    jumpValue={1}
-                    tintColor='#B30738'
-                />
-                <Text style={styles.labelText}>Title</Text>
-                <TextInput style={styles.titleInput} onChangeText={setTitle} value={title} placeholder='Title your review' />
-                <Text style={styles.labelText}>Body</Text>
-                <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
-                <Text style={styles.labelText}>Upload Photo(s)</Text>
-                <CustomModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible}>
-                            <TouchableOpacity onPress={pickImage}>
-                                <Text style={styles.labelText}>Pick From Library</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={takeImage}>
-                                <Text style={styles.labelText}>Take Photo</Text>
-                            </TouchableOpacity>
-                </CustomModal>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
-                        <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
-                    </TouchableOpacity>
-                    {imageURIs.map((image, index) => (
-                        <Image key={index} source={{ uri: image }} style={styles.image} />
-                    ))}
-                </View>
-            </KeyboardAvoidingView>
+            <ScrollView automaticallyAdjustKeyboardInsets={true}>
+                <KeyboardAvoidingView style={styles.contentContainer} behavior='height'>
+                    <RNPickerSelect
+                        value={foodId}
+                        onValueChange={(value) => setFoodId(value)}
+                        items={allFood.map(food => ({ label: food.name, value: food.foodId }))}
+                        style={pickerSelectStyles}
+                    />
+                    <Text style={styles.labelText}>Rating</Text>
+                    <Rating
+                        onFinishRating={setRating}
+                        startingValue={2.5}
+                        jumpValue={1}
+                        tintColor='#B30738'
+                    />
+                    <Text style={styles.labelText}>Upload Photo(s)</Text>
+                    <CustomModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible}>
+                        <TouchableOpacity onPress={pickImage}>
+                            <Text style={styles.labelText}>Pick From Library</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={takeImage}>
+                            <Text style={styles.labelText}>Take Photo</Text>
+                        </TouchableOpacity>
+                    </CustomModal>
+                    <CustomModal visible={removeImageModalVisible} setVisible={setRemoveImageModalVisible}>
+                        <TouchableOpacity onPress={removeImage}>
+                            <Text style={styles.labelText}>Delete Image</Text>
+                        </TouchableOpacity>
+                    </CustomModal>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', borderWidth: 2, borderColor: 'black' }}>
+                        {imageURIs.map((image, index) => {
+                            return (
+                                <TouchableOpacity onPress={() => {
+                                    setRemoveImageModalVisible(true);
+                                    setGlobalIndex(index);
+                                }}
+                                    style={{ borderColor: 'black', borderWidth: 2 }}>
+                                    <Image key={index} source={{ uri: image }} style={styles.image} />
+                                </TouchableOpacity>
+                            );
+                        })}
+                        <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
+                            <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.tagsContainer}>
+                        <Text style={styles.labelText}>Tags</Text>
+                        <View style={styles.tagRowContent}>
+                            <View style={styles.tagButton}>
+                                <Text style={styles.tagText}>Vegan</Text>
+                            </View>
+                            <View style={styles.tagButton}>
+                                <Text style={styles.tagText}>Vegetarian</Text>
+                            </View>
+                            <View style={styles.tagButton}>
+                                <Text style={styles.tagText}>Raw</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.moreTagsText}>+ More Tags</Text>
+                    </View>
+                    <Text style={styles.labelText}>Leave a review</Text>
+                    <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
+                </KeyboardAvoidingView>
+            </ScrollView>
             <Footer
                 leftButtonText={"Back"}
                 leftButtonPress={() => navigation.pop()}
@@ -206,29 +254,23 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         padding: 10,
         paddingTop: 10,
-        color: 'white',
-    },
-    titleInput: {
-        width: "80%",
-        height: 40,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: 'white',
-        padding: 10,
-        color: 'white',
+        color: 'black',
+        backgroundColor: 'white',
     },
     labelText: {
         fontFamily: 'Bungee',
-        fontSize: 16,
+        fontSize: 21,
         color: 'white',
         padding: 10,
+        textAlign: 'center',
     },
     image: {
         width: 100,
         height: 100,
         margin: 5,
-        borderWidth: 1,
+        borderWidth: 4,
         borderColor: 'white',
+        backgroundColor: '#CB5476',
     },
     uploadButton: {
         width: 100,
@@ -237,6 +279,37 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
     },
+    tagsContainer: {
+        margin: 15,
+        alignItems: 'center',
+    },
+    tagRowContent: {
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    tagText: {
+        fontFamily: 'Bungee',
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 12,
+    },
+    tagButton: {
+        marginHorizontal: 7,
+        borderWidth: 4,
+        borderRadius: 25,
+        borderColor: 'white',
+        height: 40,
+        width: 100,
+        justifyContent: 'center'
+    },
+    moreTagsText: {
+        fontFamily: 'Bungee',
+        fontSize: 14,
+        color: 'white',
+        textalign: 'center',
+        marginTop: 5,
+    }
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -250,7 +323,6 @@ const pickerSelectStyles = StyleSheet.create({
         margin: 10,
         color: 'white',
         fontSize: 20,
-        fontWeight: 'bold',
         fontFamily: 'Bungee',
         textAlign: 'center',
         alignSelf: 'center',
