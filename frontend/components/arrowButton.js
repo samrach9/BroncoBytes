@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, Pressable, View } from 'react-native';
 
-export function SquareTile(props) {
+export function ArrowButton(props) {
 
     return (
         <View style={styles.container}>
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'white',
-        padding: 5,
+
         borderRadius: 20,
         margin: 5,
-        width: 150,
-        height: 150,
+        width: 25,
+        height: 25,
         display:"flex",
         justifyContent: 'center',
         alignItems: 'center'
@@ -36,6 +36,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#B30738',
         textAlign: 'center',
-        padding: 10,
     },
 });

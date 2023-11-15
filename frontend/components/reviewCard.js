@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { Rating } from 'react-native-ratings';
@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import removeReview from '../api/removeReview';
 import { CustomModal } from './customModal';
+import { ArrowButton } from './arrowButton';
 
 export default function ReviewCard(props) {
 
@@ -35,6 +36,29 @@ export default function ReviewCard(props) {
     }
 
     const firstImage = review.imageUrls.length > 0 ? review.imageUrls[0] : null;
+    const secondImage = review.imageUrls.length > 1 ? review.imageUrls[1] : null;
+    const thirdImage = review.imageUrls.length > 2 ? review.imageUrls[2] : null;
+
+    const [displayedImage, setDisplayedImage] = useState(firstImage);
+
+
+    const next = () => {
+        if (displayedImage === firstImage){
+            setDisplayedImage(secondImage);
+        }
+        else if (displayedImage === secondImage && thirdImage != null){
+            setDisplayedImage(thirdImage);
+        }
+    };
+
+    const prev = () => {
+        if (displayedImage === thirdImage){
+            setDisplayedImage(secondImage);
+        }
+        else if (displayedImage === secondImage){
+            setDisplayedImage(firstImage);
+        }
+    };
 
     return (
         <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Review Page', {review: review})}>
@@ -43,12 +67,18 @@ export default function ReviewCard(props) {
                     <Text style={styles.cardTitle}>{review.title}</Text>
                 </View>
                 {
-                        firstImage &&
-                        <View style={styles.foodImageContainer}>
-                            <Image source={{ uri: firstImage }}
-                                style={styles.foodImage} />
-                        </View>
-                    }
+                    displayedImage &&
+                    <View style={styles.foodImageContainer}>
+                        <Image source={{ uri: displayedImage }} style={styles.foodImage} />
+                    </View>
+                }
+                {
+                    secondImage &&
+                    <View style={styles.oneRow}>
+                        <ArrowButton text="<" onClick={() => prev()}/>
+                        <ArrowButton text=">" onClick={() => next()}/>
+                    </View>
+                }
                 <View style={styles.starContainer}>
                     <Text style={styles.ratingText}>Rating: </Text>
                     <Rating
@@ -140,7 +170,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontFamily: 'Bungee',
-        color: 'white'
+        color: 'white',
     },
     notesText: {
         fontSize: 10,
@@ -159,4 +189,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 10,
     },
+    oneRow: {
+        flexDirection: 'row',
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 });
