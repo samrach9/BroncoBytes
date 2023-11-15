@@ -17,7 +17,7 @@ import { tags } from '../enum/tags';
 export default function LeaveReview({ route }) {
 
     const navigation = useNavigation();
-    const [counter, setCounter] = useState(0);
+    const [globalCount, setGlobalCounter] = useState(1);
     const [globalIndex, setGlobalIndex] = useState(-1);
 
     const [mediaLibraryStatus, mediaLibraryRequestPermissions] = ImagePicker.useMediaLibraryPermissions();
@@ -54,8 +54,8 @@ export default function LeaveReview({ route }) {
             setImageURIs([...imageURIs, result.assets[0].uri]);
         }
         setImagePickerModalVisible(false);
-        setCounter(counter + 1);
-        console.log(counter);
+        setGlobalCounter(globalCount + 1);
+        console.log(globalCount);
     };
 
     const takeImage = async () => {
@@ -76,14 +76,16 @@ export default function LeaveReview({ route }) {
             setImageURIs([...imageURIs, result.assets[0].uri]);
         }
         setImagePickerModalVisible(false);
-        setCounter(counter + 1);
-        console.log(counter);
+        setGlobalCounter(globalCount + 1);
+        console.log(globalCount);
     };
 
     const removeImage = async () => {
         setImageURIs(imageURIs.filter((item) => item != imageURIs[globalIndex]));
         console.log(imageURIs[globalIndex]);
         setRemoveImageModalVisible(false);
+        setGlobalCounter(globalCount - 1);
+        console.log(globalCount);
     };
 
 
@@ -138,7 +140,7 @@ export default function LeaveReview({ route }) {
                     food.reviews = [];
                 }
                 food.reviews.push(review);
-                if(!('imageUrls' in food)) {
+                if (!('imageUrls' in food)) {
                     food.imageUrls = [];
                 }
                 food.imageUrls = food.imageUrls.concat(imageUrls);
@@ -194,21 +196,24 @@ export default function LeaveReview({ route }) {
                             <Text style={styles.labelText}>Delete Image</Text>
                         </TouchableOpacity>
                     </CustomModal>
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', borderWidth: 2, borderColor: 'black' }}>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                         {imageURIs.map((image, index) => {
                             return (
                                 <TouchableOpacity onPress={() => {
                                     setRemoveImageModalVisible(true);
                                     setGlobalIndex(index);
-                                }}
-                                    style={{ borderColor: 'black', borderWidth: 2 }}>
+                                }}>
                                     <Image key={index} source={{ uri: image }} style={styles.image} />
                                 </TouchableOpacity>
                             );
                         })}
-                        <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
-                            <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
-                        </TouchableOpacity>
+                        {
+                            globalCount < 4 ? (
+                                <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
+                                    <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
+                                </TouchableOpacity>
+                            ) : null
+                        }
                     </View>
                     <View style={styles.tagsContainer}>
                         <Text style={styles.labelText}>Tags</Text>
