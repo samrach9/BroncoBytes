@@ -4,8 +4,7 @@ import { Text, StyleSheet, Pressable } from 'react-native';
 export function SmallRectangleButton(props) {
 
     return (
-        <Pressable style={styles.button}
-            onPress={props.onClick}>
+        <Pressable style={styles.button} onPress={props.onClick}>
             <Text style={styles.buttonText}>{props.text}</Text>
         </Pressable>
     )
