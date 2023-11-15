@@ -1,16 +1,26 @@
 import React from 'react';
-import { Text, StyleSheet, Pressable, View } from 'react-native';
+import { Text, StyleSheet, Pressable, View, Image } from 'react-native';
 
 export function ArrowButton(props) {
 
-    return (
-        <View style={styles.container}>
-            <Pressable style={styles.button}
-                onPress={props.onClick}>
-                <Text style={styles.buttonText}>{props.text}</Text>
-            </Pressable>
-        </View>
-    )
+    if (props.direction === 'left'){
+        return (
+            <View style={styles.container}>
+                <Pressable style={styles.button} onPress={props.onClick}>
+                    <Image source={require('../assets/Left.png')} style={styles.icon} />
+                </Pressable>
+            </View>
+        )
+    }
+    else if (props.direction === 'right'){
+        return (
+            <View style={styles.container}>
+                <Pressable style={styles.button} onPress={props.onClick}>
+                    <Image source={require('../assets/Right.png')} style={styles.icon} />
+                </Pressable>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -21,7 +31,6 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'white',
-
         borderRadius: 20,
         margin: 5,
         width: 25,
@@ -29,12 +38,10 @@ const styles = StyleSheet.create({
         display:"flex",
         justifyContent: 'center',
         alignItems: 'center'
-        
     },
-    buttonText: {
-        fontFamily: 'Bungee',
-        fontSize: 15,
-        color: '#B30738',
-        textAlign: 'center',
+    icon: {
+        width: 15,
+        height: 15,
+        margin: 10,
     },
 });

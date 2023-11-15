@@ -131,8 +131,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     submittedText: {
-        fontFamily: 'Bungee',
-        fontSize: 8,
+        fontSize: 10,
         color: '#db88a0'
     },
     foodImage: {

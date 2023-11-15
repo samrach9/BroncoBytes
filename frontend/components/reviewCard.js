@@ -75,8 +75,8 @@ export default function ReviewCard(props) {
                 {
                     secondImage &&
                     <View style={styles.oneRow}>
-                        <ArrowButton text="<" onClick={() => prev()}/>
-                        <ArrowButton text=">" onClick={() => next()}/>
+                        <ArrowButton text="<" onClick={() => prev()} direction='left'/>
+                        <ArrowButton text=">" onClick={() => next()} direction='right'/>
                     </View>
                 }
                 <View style={styles.starContainer}>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         height: "auto",
         width: 300,
         backgroundColor: '#850529',
-        margin: 50,
+        margin: 25,
         padding: 10,
         borderWidth: 2,
         borderColor: '#850529',
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         flex: 9,
         alignItems: 'center',
-        marginBottom: 5,
+        //marginBottom: 5,
         padding: 10
     },
     starContainer: {
@@ -150,8 +150,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     submittedText: {
-        fontFamily: 'Bungee',
-        fontSize: 8,
+        fontSize: 10,
         color: '#db88a0'
     },
     foodImage: {
@@ -194,5 +193,10 @@ const styles = StyleSheet.create({
         flex: 0.5,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    dots: {
+        flex: 0.5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
