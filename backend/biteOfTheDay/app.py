@@ -18,7 +18,7 @@ def lambda_handler(event, context):
     oldBiteOTD = [food for food in foods if 'biteOTD' in food and food['biteOTD']['S'] == 'T']
     oldBiteOTD = oldBiteOTD[0] if len(oldBiteOTD) > 0 else None
     randomFood = random.choice(foods)
-    while randomFood == oldBiteOTD:
+    while randomFood == oldBiteOTD or len(randomFood['imageUrls']['L']) == 0:
         randomFood = random.choice(foods)
     
     if oldBiteOTD is not None:
