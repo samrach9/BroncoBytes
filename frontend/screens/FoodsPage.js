@@ -28,7 +28,7 @@ export default function FoodsPage({route}) {
                 <View style={styles.content}>
                     {!refreshing && food.map((item) => {
                         return (
-                            <FoodCard key={item.foodId} food={item} refreshing={refreshing}/>
+                            <FoodCard key={item.foodId} food={item} />
                         )
                     })}
                 </View>
