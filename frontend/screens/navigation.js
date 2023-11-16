@@ -45,9 +45,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     chooseHallContainer: {
-        padding: 15,
+        padding: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 60,
+        
     },
     loadText: {
         fontFamily: 'Bungee',
@@ -68,6 +70,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignContent: 'center',
         alignItems: 'center',
+        paddingBottom: 50,
     },
     allReviewsButton: {
         width: 202,
