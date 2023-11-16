@@ -6,7 +6,6 @@ import getReviewsByFood from '../api/getReviewsByFood';
 import getUserById from '../api/getUserById';
 import { FoodContext } from '../App';
 import { useNavigation } from '@react-navigation/native';
-import { AutoScaling } from 'aws-sdk';
 
 export default function FoodCard(props) {
 
