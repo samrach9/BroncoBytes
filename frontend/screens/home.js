@@ -4,24 +4,33 @@ import { useNavigation } from '@react-navigation/native';
 import { FoodContext } from '../App';
 import FoodCard from '../components/foodCard';
 import { BigRectangleButton } from '../components/bigRectangleButton';
+import { Footer } from '../components/footer';
 
 export default function Home() {
-
     const navigation = useNavigation();
     const { allFood, setAllFood } = useContext(FoodContext);
 
     return (
         <View style={styles.container}>
-            <View style={styles.biteOTD}>
-                <Text style={styles.biteText}>Byte of the Day</Text>
-            </View>
-            
-            <FoodCard key={allFood[0].foodId} food={allFood[0]} />
+            <View style={styles.contentContainer}>
+                <View style={styles.biteOTD}>
+                    <Text style={styles.biteText}>Byte of the Day</Text>
+                </View>
+                
+                <FoodCard key={allFood[0].foodId} food={allFood[0]} />
 
-            <View style={styles.buttonsContainer}>
-                <BigRectangleButton text='Browse Reviews' onClick={() => navigation.navigate('Choose Hall')} />
-                <BigRectangleButton text='Leave A Review' onClick={() => navigation.navigate('Leave Review')} />
+                <View style={styles.buttonsContainer}>
+                    <BigRectangleButton text='Browse Reviews' onClick={() => navigation.navigate('Choose Hall')} />
+                    <BigRectangleButton text='Leave A Review' onClick={() => navigation.navigate('Leave Review')} />
+                </View>
             </View>
+            <Footer
+                leftButtonText={"Back"}
+                leftButtonPress={() => navigation.pop()}
+                iconButtonPress={() => navigation.navigate('Navigation')}
+                rightButtonText={"Review"}
+                rightButtonPress={() => navigation.navigate('Leave Review')}
+            />
         </View>
     )
 }
@@ -30,6 +39,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#B30738',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    contentContainer: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },

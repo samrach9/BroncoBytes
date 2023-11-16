@@ -20,7 +20,7 @@ export default function screenFramework() {
             </View>
             <Footer
                 leftButtonText={"Back"}
-                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                leftButtonPress={() => navigation.pop()}
                 iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Review"}
                 rightButtonPress={() => navigation.navigate('Leave Review')}
