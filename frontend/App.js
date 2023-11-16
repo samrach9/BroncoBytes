@@ -20,7 +20,7 @@ import Friends from './screens/friends';
 import FoodsPage from './screens/FoodsPage';
 import ReviewsPage from './screens/ReviewsPage';
 import CreateFood from './screens/createFood';
-import AccountProfile from './screens/accountProfile';
+import AccountPage from './screens/accountPage';
 import AddingFriends from './screens/addingFriends';
 
 SplashScreen.preventAutoHideAsync();
@@ -89,7 +89,7 @@ export default function App() {
             <Stack.Screen name='Foods Page' component={FoodsPage} />
             <Stack.Screen name='Reviews Page' component={ReviewsPage} />
             <Stack.Screen name='Create Food' component={CreateFood} />
-            <Stack.Screen name='Account Profile' component={AccountProfile} />
+            <Stack.Screen name='Account Profile' component={AccountPage} />
             <Stack.Screen name='Adding Friends' component={AddingFriends} />
           </Stack.Navigator>
         </NavigationContainer>
