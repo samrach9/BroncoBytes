@@ -11,7 +11,6 @@ import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
 import { CustomModal } from '../components/customModal';
-import * as FileSystem from 'expo-file-system';
 import { tags } from '../enum/tags';
 
 export default function LeaveReview({ route }) {
@@ -28,7 +27,6 @@ export default function LeaveReview({ route }) {
     const userId = user.userId;
     const [foodId, setFoodId] = useState((route.params && "foodId" in route.params) ? route.params.foodId : null);
     const [rating, setRating] = useState(2.5);
-    const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
 
     const [imageURIs, setImageURIs] = useState([]);
@@ -96,11 +94,6 @@ export default function LeaveReview({ route }) {
             return;
         }
 
-        if (title == "") {
-            alert("Please enter a title");
-            return;
-        }
-
         if (body == "") {
             alert("Please enter a body");
             return;
@@ -125,7 +118,6 @@ export default function LeaveReview({ route }) {
             userId: userId,
             foodId: foodId,
             rating: rating,
-            title: title,
             body: body,
             imageUrls: imageUrls,
         };
@@ -152,6 +144,12 @@ export default function LeaveReview({ route }) {
             }
         }));
 
+        let updatedUser = user;
+        updatedUser['totalReviews'] = updatedUser['totalReviews'] + 1;
+        updatedUser['lastActive'] = Date.now() / 1000;
+
+        await setUser({updatedUser});
+
         navigation.navigate('Leave Review');
         alert("Review submitted!");
         resetState();
@@ -160,7 +158,6 @@ export default function LeaveReview({ route }) {
     const resetState = () => {
         setFoodId(null);
         setRating(2.5);
-        setTitle("");
         setBody("");
         setImageURIs([]);
     }

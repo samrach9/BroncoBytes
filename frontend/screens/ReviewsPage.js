@@ -6,6 +6,7 @@ import { Footer } from '../components/footer';
 import ReviewCard from '../components/reviewCard';
 import FoodCard from '../components/foodCard';
 import { UserContext } from '../App';
+import { AccountProfile } from '../components/accountProfile';
 
 export default function ReviewsPage({route}) {
 
@@ -19,7 +20,7 @@ export default function ReviewsPage({route}) {
         <View style={styles.container}>
             <ScrollView style={styles.contentContainer}>
                 <TopBar text={food.name}/>
-                {food.foodId != user.userId && <FoodCard food={food} />}
+                {food.foodId == user.userId ? <AccountProfile user={user}/> : <FoodCard food={food} />}
                 <View style={styles.content}>
                     {reviews.map((item) => {
                         return (

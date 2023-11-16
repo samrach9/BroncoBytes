@@ -95,7 +95,8 @@ def lambda_handler(event, context):
             'email': {'S': body['email']},
             'username': {'S': body['username']},
             'password': {'S': body['password']},
-            'admin': {'BOOL': False}
+            'admin': {'BOOL': False},
+            'totalReviews': {'N': '0'},
         }
 
     # Put object in DB
