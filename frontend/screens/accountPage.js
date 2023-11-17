@@ -15,9 +15,10 @@ import { ImagePickerModal } from '../components/imagePickerModal';
 import getReviewsByUser from '../api/getReviewsByUser';
 import getUserByEmail from '../api/getUserByEmail';
 import getUserByUsername from '../api/getUserByUsername';
+import { AccountProfile } from '../components/accountProfile';
 
 // options shift f
-export default function AccountProfile() {
+export default function AccountPage() {
 
     const navigation = useNavigation();
     const { user, setUser } = useContext(UserContext);
@@ -307,20 +308,7 @@ export default function AccountProfile() {
         // Container
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <View style={styles.userInformationContainer}>
-                    <View style={styles.profileIconContainer}>
-                        {('photoUrl' in user && user.photoUrl) ? 
-                            <Image source={{ uri: user.photoUrl }} style={styles.circle} />
-                            :   
-                            <View style={styles.circle}>
-                                <Text style={{width: 100, textAlign: 'center'}}>Upload a photo below</Text>
-                            </View>
-                            }
-                    </View>
-                    <View style={styles.myProfileTextContainer}>
-                        <Text style={styles.chooseHallText}>{user.username}</Text>
-                    </View>
-                </View>
+                <AccountProfile user={user}/>
                 <View style={styles.buttonContainer}>
                     <BigRectangleButton text='Change Name' onClick={() => setChangeNameModalVisible(true)} />
                     <ChangeNameModal />
@@ -345,7 +333,7 @@ export default function AccountProfile() {
                 </View>
                 <Footer
                     leftButtonText={"Back"}
-                    leftButtonPress={() => navigation.navigate('Choose Hall')}
+                    leftButtonPress={() => navigation.pop()}
                     iconButtonPress={() => navigation.navigate('Navigation')}
                     rightButtonText={"Review"}
                     rightButtonPress={() => navigation.navigate('Leave Review')}
@@ -363,11 +351,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     contentContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    myProfileTextContainer: {
-        padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -392,19 +375,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    profileIconContainer: {
-        marginTop: 60,
-    },
-    circle: {
-        borderRadius: 75,
-        borderColor: 'black',
-        borderWidth: 2,
-        width: 150,
-        height: 150,
-        marginBottom: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     logOutContainer: {
         marginTop: 30,

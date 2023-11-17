@@ -34,6 +34,7 @@ def lambda_handler(event, context):
             'rating':{'N': "0"},
             'totalReviews':{'N': "0"},
             'imageUrls':{'L': []},
+            'biteOTD':{'S': "F"},
         }
 
     if 'name' in body:

@@ -22,6 +22,11 @@ export default function AddingFriends() {
                             placeholder="Search..."
                         />
                     </View>
+                    <View style = {styles.goButtonContainer}>
+                        <Pressable style={styles.goButton}>
+                            <Text style={styles.buttonText}>Go</Text>
+                        </Pressable>
+                    </View>
                     <View style={styles.content}>
                         <View style={styles.miscButtons}>
                             <Text style={styles.miscText}>Suggested Friends</Text>
@@ -37,7 +42,7 @@ export default function AddingFriends() {
             </View>
             <Footer
                 leftButtonText={"Back"}
-                leftButtonPress={() => navigation.navigate('Choose Hall')}
+                leftButtonPress={() => navigation.pop()}
                 iconButtonPress={() => navigation.navigate('Navigation')}
                 rightButtonText={"Review"}
                 rightButtonPress={() => navigation.navigate('Leave Review')}
@@ -48,6 +53,13 @@ export default function AddingFriends() {
 
 
 const styles = StyleSheet.create({
+    buttonText: {
+        fontFamily: 'Bungee',
+        fontSize: 20,
+        color: '#B30738',
+        textAlign: 'center',
+        padding: 0,
+    },
     container: {
         flex: 1,
         backgroundColor: '#B30738',
@@ -66,7 +78,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
       },
-    followButton: {
+
+      goButtonContainer: {
+        backgroundColor: '#B30738',
+        paddingLeft: 15,
+      },
+        goButton: {
         width: 100,
         padding: 1,
         borderRadius: 20,
@@ -78,7 +95,7 @@ const styles = StyleSheet.create({
     miscButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 15,
+        margin: 20,
     },
     friendIconsHorizontalContainer: {
         justifyContent: 'space-between',
@@ -111,6 +128,6 @@ const styles = StyleSheet.create({
     miscText: {
         color: 'white',
         fontFamily: 'Bungee',
-        fontSize: 15,
+        fontSize: 20,
     },
 });

@@ -346,6 +346,50 @@ Resources:
       Policies:
       - AmazonDynamoDBFullAccess 
 
+  updateUserReviewsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: updateUserReviews/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - arm64
+      Environment:
+        Variables:
+          ENV: prod 
+          ENDPOINT_URL: none
+          DYNAMODB_TABLE: !Ref userDynamoDB
+      Events:
+        updateUser:
+          Type: DynamoDB
+          Properties:
+            Stream: !GetAtt reviewDynamoDB.StreamArn
+            StartingPosition: LATEST
+            BatchSize: 1
+      Policies:
+      - AmazonDynamoDBFullAccess
+    
+  biteOfTheDayFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: biteOfTheDay/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - arm64
+      Environment:
+        Variables:
+          ENV: prod 
+          ENDPOINT_URL: none
+          DYNAMODB_TABLE: !Ref foodDynamoDB
+      Events:
+        biteOfTheDay:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+      Policies:
+      - AmazonDynamoDBFullAccess
+
   foodReviewApi:
     Type: AWS::Serverless::Api
     Properties:

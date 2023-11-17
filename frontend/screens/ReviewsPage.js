@@ -6,6 +6,8 @@ import { Footer } from '../components/footer';
 import ReviewCard from '../components/reviewCard';
 import FoodCard from '../components/foodCard';
 import { UserContext } from '../App';
+import { AccountProfile } from '../components/accountProfile';
+import { BigRectangleButton } from '../components/bigRectangleButton';
 
 export default function ReviewsPage({route}) {
 
@@ -19,8 +21,8 @@ export default function ReviewsPage({route}) {
         <View style={styles.container}>
             <ScrollView style={styles.contentContainer}>
                 <TopBar text={food.name}/>
-                {food.foodId != user.userId && <FoodCard food={food} />}
                 <View style={styles.content}>
+                    {food.foodId == user.userId ? <AccountProfile user={user}/> : food.foodId == 'friends' ? <BigRectangleButton text={"Friends"} onClick={() => navigation.navigate('Friends')} /> : <FoodCard food={food} />}
                     {reviews.map((item) => {
                         return (
                             <ReviewCard key={item.reviewId} review={item} canRemove={user.admin || user.userId == item.userId}/>
@@ -46,5 +48,11 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
+    },
+    content: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
