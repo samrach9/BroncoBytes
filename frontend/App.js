@@ -20,7 +20,7 @@ import Friends from './screens/friends';
 import FoodsPage from './screens/FoodsPage';
 import ReviewsPage from './screens/ReviewsPage';
 import CreateFood from './screens/createFood';
-import AccountPage from './screens/accountPage';
+import AccountProfile from './screens/accountPage'
 import AddingFriends from './screens/addingFriends';
 
 SplashScreen.preventAutoHideAsync();
@@ -75,7 +75,7 @@ export default function App() {
     <View style={{ height: '100%', width: '100%' }} onLayout={onLayoutRootView}>
       <UserContext.Provider value={{ user: user, setUser: setUser }}>
         <FoodContext.Provider value={{ allFood: allFood, setAllFood: setAllFood }}>
-          <NavigationContainer >
+          <NavigationContainer>
             <Stack.Navigator initialRouteName={initialRouteName}>
               <Stack.Screen name='Loading' component={Loading} />
               <Stack.Screen name='Home' component={Home} />
