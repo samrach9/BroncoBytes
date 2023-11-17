@@ -11,10 +11,6 @@ import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
 import { CustomModal } from '../components/customModal';
-import { TagButton } from '../components/tagButton';
-import * as FileSystem from 'expo-file-system';
-import { tags } from '../enum/tags';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 export default function LeaveReview({ route }) {
 
@@ -36,9 +32,6 @@ export default function LeaveReview({ route }) {
     const [imageURIs, setImageURIs] = useState([]);
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
     const [removeImageModalVisible, setRemoveImageModalVisible] = useState(false);
-
-    const [sliceIndex, setSliceIndex] = useState(3);
-    const [showingMoreTags, setShowingMoreTags] = useState(false);
 
     const pickImage = async () => {
         if (!mediaLibraryStatus.granted) {
@@ -274,39 +267,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
     },
-    tagsContainer: {
-        margin: 15,
-        alignItems: 'center',
-    },
-    tagRowContent: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-
-    },
-    tagText: {
-        fontFamily: 'Bungee',
-        color: 'white',
-        textAlign: 'center',
-        fontSize: 12,
-    },
-    tagButton: {
-        marginHorizontal: 7,
-        borderWidth: 4,
-        borderRadius: 25,
-        borderColor: 'white',
-        height: 40,
-        width: 100,
-        justifyContent: 'center'
-    },
-    moreTagsText: {
-        fontFamily: 'Bungee',
-        fontSize: 14,
-        color: 'white',
-        textalign: 'center',
-        marginTop: 5,
-    }
 });
 
 const pickerSelectStyles = StyleSheet.create({
