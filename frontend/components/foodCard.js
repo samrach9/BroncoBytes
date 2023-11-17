@@ -53,7 +53,7 @@ export default function FoodCard(props) {
     }
 
     return (
-        <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Reviews Page', {food: food})}>
+        <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Reviews Page', { food: food })}>
             <View style={styles.ratingCard}>
                 <View style={styles.cardTitleContainer}>
                     <Text style={styles.cardTitle}>{food.name}</Text>
@@ -68,6 +68,9 @@ export default function FoodCard(props) {
                 {
                     'reviews' in food && food.reviews && food.reviews.length > 0 &&
                     <>
+                        <View style={styles.notesContainer}>
+                            <Text style={styles.notesText}>{'reviews' in food && food.reviews && food.reviews.length > 0 && food.reviews[0].body}</Text>
+                        </View>
                         <View style={styles.starContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
                             <Rating
@@ -78,12 +81,20 @@ export default function FoodCard(props) {
                                 type='custom'
                                 ratingBackgroundColor='#850529'
                             />
-                        </View>   
-                        <View style={styles.notesContainer}>
-                            <Text style={styles.notesText}>{'reviews' in food && food.reviews && food.reviews.length > 0 && food.reviews[0].body}</Text>
+                        </View>
+                        <View style={styles.tagsContainer}>
+                            {
+                                'tags' in food && food.tags && food.tags.map((tag) => {
+                                    return (
+                                        <View style={styles.tagButton}>
+                                            <Text style={styles.tagText}>{tag}</Text>
+                                        </View>
+                                    );
+                                })
+                            }
                         </View>
                         <View style={styles.submittedContainer}>
-                            <Text style={styles.submittedText}>- Submitted { 'user' in food.reviews[0] && food.reviews[0].user && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
+                            <Text style={styles.submittedText}>- Submitted {'user' in food.reviews[0] && food.reviews[0].user && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
                         </View>
                     </>
                 }
@@ -118,10 +129,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 5,
+        margin: 10,
     },
     notesContainer: {
         flex: 2.5,
+        margin: 10,
     },
     submittedContainer: {
         flex: 0.5,
@@ -154,5 +166,27 @@ const styles = StyleSheet.create({
     notesText: {
         fontSize: 10,
         color: 'white'
+    },
+    tagsContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    tagText: {
+        fontFamily: 'Bungee',
+        color: 'black',
+        textAlign: 'center',
+        fontSize: 10,
+    },
+    tagButton: {
+        marginHorizontal: 7,
+        borderWidth: 4,
+        borderRadius: 25,
+        borderColor: 'white',
+        height: 20,
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        flexWrap: 'wrap',
     },
 });

@@ -144,7 +144,7 @@ export default function LeaveReview({ route }) {
         updatedUser['totalReviews'] = updatedUser['totalReviews'] + 1;
         updatedUser['lastActive'] = Date.now() / 1000;
 
-        await setUser({updatedUser});
+        await setUser({ updatedUser });
 
         navigation.navigate('Leave Review');
         alert("Review submitted!");
@@ -161,58 +161,68 @@ export default function LeaveReview({ route }) {
     return (
         <View style={styles.container}>
             <TopBar text={"Leave a Review"} />
-            <ScrollView automaticallyAdjustKeyboardInsets={true}>
-                <KeyboardAvoidingView style={styles.contentContainer} behavior='height'>
-                    <RNPickerSelect
-                        value={foodId}
-                        onValueChange={(value) => setFoodId(value)}
-                        items={allFood.map(food => ({ label: food.name, value: food.foodId }))}
-                        style={pickerSelectStyles}
-                    />
-                    <Text style={styles.labelText}>Rating</Text>
-                    <Rating
-                        onFinishRating={setRating}
-                        startingValue={2.5}
-                        jumpValue={1}
-                        tintColor='#B30738'
-                    />
-                    <Text style={styles.labelText}>Upload Photo(s)</Text>
-                    <CustomModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible}>
-                        <TouchableOpacity onPress={pickImage}>
-                            <Text style={styles.labelText}>Pick From Library</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={takeImage}>
-                            <Text style={styles.labelText}>Take Photo</Text>
-                        </TouchableOpacity>
-                    </CustomModal>
-                    <CustomModal visible={removeImageModalVisible} setVisible={setRemoveImageModalVisible}>
-                        <TouchableOpacity onPress={removeImage}>
-                            <Text style={styles.labelText}>Delete Image</Text>
-                        </TouchableOpacity>
-                    </CustomModal>
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-                        {imageURIs.map((image, index) => {
-                            return (
-                                <TouchableOpacity onPress={() => {
-                                    setRemoveImageModalVisible(true);
-                                    setGlobalIndex(index);
-                                }}>
-                                    <Image key={index} source={{ uri: image }} style={styles.image} />
+            <View style={styles.contentContainer}>
+                <ScrollView automaticallyAdjustKeyboardInsets={true}>
+                    <KeyboardAvoidingView behavior='height'>
+                        <View style={styles.RNPickerSelectContainer}>
+                            <RNPickerSelect
+                                value={foodId}
+                                onValueChange={(value) => setFoodId(value)}
+                                items={allFood.map(food => ({ label: food.name, value: food.foodId }))}
+                                style={pickerSelectStyles}
+                            />
+                        </View>
+                        <View style={styles.ratingContainer}>
+                            <Text style={styles.labelText}>Rating</Text>
+                            <Rating
+                                onFinishRating={setRating}
+                                startingValue={2.5}
+                                jumpValue={1}
+                                tintColor='#B30738'
+                            />
+                        </View>
+                        <View style={styles.uploadPhotosContainer}>
+                            <Text style={styles.labelText}>Upload Photo(s)</Text>
+                            <CustomModal visible={imagePickerModalVisible} setVisible={setImagePickerModalVisible}>
+                                <TouchableOpacity onPress={pickImage}>
+                                    <Text style={styles.labelText}>Pick From Library</Text>
                                 </TouchableOpacity>
-                            );
-                        })}
-                        {
-                            globalCount < 4 ? (
-                                <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
-                                    <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
+                                <TouchableOpacity onPress={takeImage}>
+                                    <Text style={styles.labelText}>Take Photo</Text>
                                 </TouchableOpacity>
-                            ) : null
-                        }
-                    </View>
-                    <Text style={styles.labelText}>Leave a review</Text>
-                    <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
-                </KeyboardAvoidingView>
-            </ScrollView>
+                            </CustomModal>
+                            <CustomModal visible={removeImageModalVisible} setVisible={setRemoveImageModalVisible}>
+                                <TouchableOpacity onPress={removeImage}>
+                                    <Text style={styles.labelText}>Delete Image</Text>
+                                </TouchableOpacity>
+                            </CustomModal>
+                            <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                {imageURIs.map((image, index) => {
+                                    return (
+                                        <TouchableOpacity onPress={() => {
+                                            setRemoveImageModalVisible(true);
+                                            setGlobalIndex(index);
+                                        }}>
+                                            <Image key={index} source={{ uri: image }} style={styles.image} />
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                                {
+                                    globalCount < 4 ? (
+                                        <TouchableOpacity style={styles.image} onPress={() => setImagePickerModalVisible(true)}>
+                                            <Text style={{ fontSize: 50, textAlign: 'center', lineHeight: 90, color: 'white' }}>+</Text>
+                                        </TouchableOpacity>
+                                    ) : null
+                                }
+                            </View>
+                        </View>
+                        <View style={styles.leaveReviewContainer}>
+                            <Text style={styles.labelText}>Leave a review</Text>
+                            <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
+                        </View>
+                    </KeyboardAvoidingView>
+                </ScrollView>
+            </View>
             <Footer
                 leftButtonText={"Back"}
                 leftButtonPress={() => navigation.pop()}
@@ -231,9 +241,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        alignContent: 'center',
-        justifyContent: 'top',
-        alignItems: 'center',
+        justifyContent: 'center'
     },
     bodyInput: {
         width: "80%",
@@ -247,6 +255,7 @@ const styles = StyleSheet.create({
         color: 'black',
         backgroundColor: 'white',
         marginBottom: 20,
+        alignSelf: 'center'
     },
     labelText: {
         fontFamily: 'Bungee',
@@ -270,6 +279,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
     },
+    ratingContainer: {
+        margin: 10,
+    },
+    leaveReviewContainer: {
+        margin: 10,
+    },
+    uploadPhotosContainer: {
+        margin: 10,
+        justifyContent: 'center'
+    },
+    RNPickerSelectContainer: {
+
+    }
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -280,7 +302,7 @@ const pickerSelectStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         padding: 10,
-        margin: 10,
+        margin: 15,
         color: 'white',
         fontSize: 20,
         fontFamily: 'Bungee',
@@ -294,6 +316,6 @@ const pickerSelectStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         padding: 10,
-        margin: 10,
+        margin: 15,
     },
 })

@@ -21,10 +21,10 @@ export default function ReviewCard(props) {
         setAllFood(allFood.map((item) => {
             if (item.foodId == review.foodId) {
                 item.reviews = item.reviews.filter((item) => item.reviewId != review.reviewId);
-                if('imageUrls' in review && review.imageUrls.length > 0) {
+                if ('imageUrls' in review && review.imageUrls.length > 0) {
                     item.imageUrls = item.imageUrls.filter((item) => !review.imageUrls.includes(item));
                 }
-                if(item.reviews.length == 0) {
+                if (item.reviews.length == 0) {
                     item.rating = 0;
                 } else {
                     item.rating = (item.rating * (item.reviews.length + 1) - review.rating) / item.reviews.length;
@@ -43,25 +43,25 @@ export default function ReviewCard(props) {
 
 
     const next = () => {
-        if (displayedImage === firstImage){
+        if (displayedImage === firstImage) {
             setDisplayedImage(secondImage);
         }
-        else if (displayedImage === secondImage && thirdImage != null){
+        else if (displayedImage === secondImage && thirdImage != null) {
             setDisplayedImage(thirdImage);
         }
     };
 
     const prev = () => {
-        if (displayedImage === thirdImage){
+        if (displayedImage === thirdImage) {
             setDisplayedImage(secondImage);
         }
-        else if (displayedImage === secondImage){
+        else if (displayedImage === secondImage) {
             setDisplayedImage(firstImage);
         }
     };
 
     return (
-        <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Review Page', {review: review})}>
+        <TouchableOpacity style={styles.content} onPress={() => navigation.navigate('Review Page', { review: review })}>
             <View style={styles.ratingCard}>
                 <View style={styles.cardTitleContainer}>
                     <Text style={styles.cardTitle}>{review.title}</Text>
@@ -75,8 +75,8 @@ export default function ReviewCard(props) {
                 {
                     secondImage &&
                     <View style={styles.oneRow}>
-                        <ArrowButton text="<" onClick={() => prev()} direction='left'/>
-                        <ArrowButton text=">" onClick={() => next()} direction='right'/>
+                        <ArrowButton text="<" onClick={() => prev()} direction='left' />
+                        <ArrowButton text=">" onClick={() => next()} direction='right' />
                     </View>
                 }
                 <View style={styles.starContainer}>
@@ -96,8 +96,8 @@ export default function ReviewCard(props) {
                 <View style={styles.submittedContainer}>
                     <Text style={styles.submittedText}>- Submitted By: {review.user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(review.dateCreated * 1000)} -</Text>
                 </View>
-                { 
-                    props.canRemove && 
+                {
+                    props.canRemove &&
                     <TouchableOpacity onPress={() => setConfirmRemoveModalVisible(true)}>
                         <Text style={styles.removeText}>Remove</Text>
                     </TouchableOpacity>
