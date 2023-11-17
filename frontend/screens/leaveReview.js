@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
@@ -11,8 +11,10 @@ import { Footer } from '../components/footer';
 import uploadImage from '../helper/uploadImage';
 import putReview from '../api/putReview';
 import { CustomModal } from '../components/customModal';
+import { TagButton } from '../components/tagButton';
 import * as FileSystem from 'expo-file-system';
 import { tags } from '../enum/tags';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 export default function LeaveReview({ route }) {
 
@@ -36,7 +38,7 @@ export default function LeaveReview({ route }) {
     const [removeImageModalVisible, setRemoveImageModalVisible] = useState(false);
 
     const [sliceIndex, setSliceIndex] = useState(3);
-    const [showingMoreImages, setShowingMoreImages] = useState(false);
+    const [showingMoreTags, setShowingMoreTags] = useState(false);
 
     const pickImage = async () => {
         if (!mediaLibraryStatus.granted) {
@@ -93,11 +95,6 @@ export default function LeaveReview({ route }) {
     const submitReview = async () => {
         if (foodId == null) {
             alert("Please select a food");
-            return;
-        }
-
-        if (title == "") {
-            alert("Please enter a title");
             return;
         }
 
@@ -216,43 +213,6 @@ export default function LeaveReview({ route }) {
                             ) : null
                         }
                     </View>
-                    <View style={styles.tagsContainer}>
-                        <Text style={styles.labelText}>Tags</Text>
-                        <View style={styles.tagRowContent}>
-                            {
-                                Object.keys(tags).slice(0, sliceIndex).map((key) => {
-                                    return (
-                                        <TouchableOpacity style={{ marginVertical: 5 }}>
-                                            <View style={styles.tagButton} onClick={console.log("Pressed")}>
-                                                <Text style={styles.tagText}>{tags[key]}</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    );
-                                })
-                            }
-                        </View>
-                        {
-                            showingMoreImages ?
-                                (
-                                    <TouchableOpacity onPress={() => {
-                                        setSliceIndex(3);
-                                        setShowingMoreImages(!showingMoreImages);
-                                    }}>
-                                        <Text style={styles.moreTagsText}>- Less Tags</Text>
-                                    </TouchableOpacity>
-                                )
-                                :
-                                (
-                                    <TouchableOpacity onPress={() => {
-                                        setSliceIndex(10);
-                                        setShowingMoreImages(!showingMoreImages);
-                                    }}>
-                                        <Text style={styles.moreTagsText}>+ More Tags</Text>
-                                    </TouchableOpacity>
-                                )
-                        }
-
-                    </View>
                     <Text style={styles.labelText}>Leave a review</Text>
                     <TextInput style={styles.bodyInput} onChangeText={setBody} value={body} multiline={true} placeholder='What did you think?' blurOnSubmit={true} />
                 </KeyboardAvoidingView>
@@ -303,7 +263,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         margin: 5,
-        borderWidth: 4,
+        borderWidth: 3.5,
         borderColor: 'white',
         backgroundColor: '#CB5476',
     },
