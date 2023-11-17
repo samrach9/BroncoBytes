@@ -74,26 +74,26 @@ export default function App() {
   return (
     <View style={{ height: '100%', width: '100%' }} onLayout={onLayoutRootView}>
       <UserContext.Provider value={{ user: user, setUser: setUser }}>
-      <FoodContext.Provider value={{ allFood: allFood, setAllFood: setAllFood }}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName={initialRouteName}>
-            <Stack.Screen name='Loading' component={Loading} />
-            <Stack.Screen name='Home' component={Home} />
-            <Stack.Screen name='Choose Hall' component={ChooseHall} />
-            <Stack.Screen name='Friends' component={Friends} />
-            <Stack.Screen name='Leave Review' component={LeaveReview} />
-            <Stack.Screen name='Benson Restaurants' component={BensonRestaurants} />
-            <Stack.Screen name='Login' component={Login} />
-            <Stack.Screen name='Sign Up' component={SignUp} />
-            <Stack.Screen name='Navigation' component={Navigation} />
-            <Stack.Screen name='Foods Page' component={FoodsPage} />
-            <Stack.Screen name='Reviews Page' component={ReviewsPage} />
-            <Stack.Screen name='Create Food' component={CreateFood} />
-            <Stack.Screen name='Account Profile' component={AccountPage} />
-            <Stack.Screen name='Adding Friends' component={AddingFriends} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </FoodContext.Provider>
+        <FoodContext.Provider value={{ allFood: allFood, setAllFood: setAllFood }}>
+          <NavigationContainer >
+            <Stack.Navigator initialRouteName={initialRouteName}>
+              <Stack.Screen name='Loading' component={Loading} />
+              <Stack.Screen name='Home' component={Home} />
+              <Stack.Screen name='Choose Hall' component={ChooseHall} />
+              <Stack.Screen name='Friends' component={Friends} />
+              <Stack.Screen name='Leave Review' component={LeaveReview} />
+              <Stack.Screen name='Benson Restaurants' component={BensonRestaurants} />
+              <Stack.Screen name='Login' component={Login} />
+              <Stack.Screen name='Sign Up' component={SignUp} />
+              <Stack.Screen name='Navigation' component={Navigation} />
+              <Stack.Screen name='Foods Page' component={FoodsPage} />
+              <Stack.Screen name='Reviews Page' component={ReviewsPage} />
+              <Stack.Screen name='Create Food' component={CreateFood} />
+              <Stack.Screen name='Account Profile' component={AccountProfile} />
+              <Stack.Screen name='Adding Friends' component={AddingFriends} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </FoodContext.Provider>
       </UserContext.Provider>
     </View>
   );
