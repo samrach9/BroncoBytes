@@ -17,7 +17,7 @@ export function TagButton(props) {
         <View style={styles.tagContainer}>
             <TouchableHighlight {...selectedProps}>
                 <View style={styles.tagButton}>
-                    <Text style={isSelected ? styles.tagTextSelected : styles.tagTextDeselected}>{tags[props.tagKey]}</Text>
+                    <Text style={isSelected ? styles.tagTextSelected : styles.tagTextDeselected}>{props.text}</Text>
                 </View>
             </TouchableHighlight>
         </View>
@@ -33,15 +33,15 @@ const styles = StyleSheet.create({
     },
     tagTextSelected: {
         fontFamily: 'Bungee',
-        color: 'black',
+        color: '#B30738',
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: 16,
     },
     tagTextDeselected: {
         fontFamily: 'Bungee',
         color: 'white',
         textAlign: 'center',
-        fontSize: 12,
+        fontSize: 16,
     },
     tagButtonSelected: {
         borderWidth: 4,

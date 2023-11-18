@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         height: "auto",
         width: 300,
         backgroundColor: '#850529',
-        margin: 50,
+        marginVertical: 25,
         padding: 10,
         borderWidth: 2,
         borderColor: '#850529',
@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
     },
     tagButton: {
         marginHorizontal: 7,
+        marginVertical: 2.5,
         borderWidth: 4,
         borderRadius: 25,
         borderColor: 'white',
