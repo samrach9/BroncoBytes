@@ -22,7 +22,7 @@ export default function BensonRestaurants() {
                         {
                             Object.keys(bensonRestaurants).map((key) => {
                                 return (
-                                    <BigRectangleButton text={bensonRestaurants[key]} onClick={() => navigation.navigate('Foods Page', {restaurantKey: key, restaurantName: bensonRestaurants[key]})} />
+                                    <BigRectangleButton key={key} text={bensonRestaurants[key]} onClick={() => navigation.navigate('Foods Page', {restaurantKey: key, restaurantName: bensonRestaurants[key]})} />
                                 )
                             })
                         }
