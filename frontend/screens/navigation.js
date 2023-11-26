@@ -7,6 +7,7 @@ import { Footer } from '../components/footer';
 import { BigRectangleButton } from '../components/bigRectangleButton';
 import getUserById from '../api/getUserById';
 import { UserContext } from '../App';
+import { AllUsersContext } from '../App';
 import getReviewsByUser from '../api/getReviewsByUser';
 
 // options shift f
@@ -14,6 +15,7 @@ export default function Navigation() {
 
     const navigation = useNavigation();
     const { user, setUser } = useContext(UserContext);
+    const { allUsers, setAllUsers } = useContext(AllUsersContext);
 
     async function viewFriendsFeed() {
         navigation.navigate('Loading');
@@ -27,7 +29,7 @@ export default function Navigation() {
         }
         for (const userId of user.friends) {
             console.log(userId)
-            let friend = await getUserById(userId);
+            let friend = await getUserById(userId, allUsers, setAllUsers);
             let friendReviews = await getReviewsByUser(userId);
             friendReviews = friendReviews.map((item) => {
                 item['user'] = friend;

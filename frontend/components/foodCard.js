@@ -5,12 +5,15 @@ import { Rating } from 'react-native-ratings';
 import getReviewsByFood from '../api/getReviewsByFood';
 import getUserById from '../api/getUserById';
 import { FoodContext } from '../App';
+import { AllUsersContext } from '../App';
+import { tags } from '../enum/tags';
 import { useNavigation } from '@react-navigation/native';
 
 export default function FoodCard(props) {
 
     const navigation = useNavigation();
     const { allFood, setAllFood } = useContext(FoodContext);
+    const { allUsers, setAllUsers } = useContext(AllUsersContext);
 
     const [loading, setLoading] = useState(true);
 
@@ -27,7 +30,7 @@ export default function FoodCard(props) {
             }
             for (let i = 0; i < food.reviews.length; i++) {
                 if (!('user' in food.reviews[i])) {
-                    food.reviews[i].user = await getUserById(food.reviews[i].userId);
+                    food.reviews[i].user = await getUserById(food.reviews[i].userId, allUsers, setAllUsers);
                 }
             }
             setAllFood(allFood.map((item) => {
@@ -66,7 +69,7 @@ export default function FoodCard(props) {
                     </View>
                 }
                 {
-                    'reviews' in food && food.reviews && food.reviews.length > 0 &&
+                    'reviews' in food && food.reviews && food.reviews.length > 0 ?
                     <>
                         <View style={styles.notesContainer}>
                             <Text style={styles.notesText}>{'reviews' in food && food.reviews && food.reviews.length > 0 && food.reviews[0].body}</Text>
@@ -86,8 +89,8 @@ export default function FoodCard(props) {
                             {
                                 'tags' in food && food.tags && food.tags.map((tag) => {
                                     return (
-                                        <View style={styles.tagButton}>
-                                            <Text style={styles.tagText}>{tag}</Text>
+                                        <View key={tag} style={styles.tagButton}>
+                                            <Text key={tag} style={styles.tagText}>{tags[tag]}</Text>
                                         </View>
                                     );
                                 })
@@ -97,6 +100,18 @@ export default function FoodCard(props) {
                             <Text style={styles.submittedText}>- Submitted {'user' in food.reviews[0] && food.reviews[0].user && 'username' in food.reviews[0].user && "By: " + food.reviews[0].user.username} On: {new Intl.DateTimeFormat('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' }).format(food.reviews[0].dateCreated * 1000)} -</Text>
                         </View>
                     </>
+                    :
+                    <View style={styles.tagsContainer}>
+                    {
+                        'tags' in food && food.tags && food.tags.map((tag) => {
+                            return (
+                                <View style={styles.tagButton}>
+                                    <Text style={styles.tagText}>{tag}</Text>
+                                </View>
+                            );
+                        })
+                    }
+                    </View>
                 }
             </View>
         </TouchableOpacity>

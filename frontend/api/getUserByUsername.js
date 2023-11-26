@@ -1,4 +1,10 @@
-export default getUserByUsername = async (username) => {
+export default getUserByUsername = async (username, allUsers, setAllUsers) => {
+    const foundUser = allUsers.find(user => user.username == username);
+    if(foundUser){
+        console.debug("Found user in allUsers");
+        console.log(foundUser)
+        return foundUser;
+    }
     let response = await fetch(
         'https://90nh29n5b7.execute-api.us-west-2.amazonaws.com/prod/getUser',
         {
@@ -11,5 +17,8 @@ export default getUserByUsername = async (username) => {
     );
     let data = await response.json();
     console.debug(data);
+    if (data.user) {
+        setAllUsers([...allUsers.filter(user => user.username != username), data.user]);
+    }
     return data;
 }

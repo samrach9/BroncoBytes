@@ -7,6 +7,7 @@ import { Footer } from '../components/footer';
 import { BigRectangleButton } from '../components/bigRectangleButton';
 import { SmallRectangleButton } from '../components/smallRectangleButton';
 import { UserContext } from '../App';
+import { AllUsersContext } from '../App';
 import * as SecureStore from 'expo-secure-store';
 import { CustomModal } from '../components/customModal';
 import updateUser from '../api/updateUser';
@@ -22,6 +23,7 @@ export default function AccountPage() {
 
     const navigation = useNavigation();
     const { user, setUser } = useContext(UserContext);
+    const { allUsers, setAllUsers } = useContext(AllUsersContext);
     const [changeNmeModalVisible, setChangeNameModalVisible] = useState(false);
     const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
     const [changeProfilePhotoModalVisible, setChangeProfilePhotoModalVisible] = useState(false);
@@ -233,9 +235,9 @@ export default function AccountPage() {
                 setAddAdminModalVisible(false);
                 let result = null;
                 if (emailRegex.test(newAdmin)) {
-                    result = await getUserByEmail(newAdmin);
+                    result = await getUserByEmail(newAdmin, allUsers, setAllUsers);
                 } else {
-                    result = await getUserByUsername(newAdmin);
+                    result = await getUserByUsername(newAdmin, allUsers, setAllUsers);
                 }
                 if ('error' in result) {
                     navigation.navigate('Account Profile');
