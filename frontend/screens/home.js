@@ -6,6 +6,7 @@ import FoodCard from "../components/foodCard";
 import { BigRectangleButton } from "../components/bigRectangleButton";
 import { Footer } from "../components/footer";
 
+
 export default function Home() {
   const navigation = useNavigation();
   const { allFood, setAllFood } = useContext(FoodContext);
@@ -15,7 +16,7 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <ScrollView scrollEnabled={false}>
+        <ScrollView>
           <View style={styles.biteOTD}>
             <Text style={styles.biteText}>Byte of the Day</Text>
           </View>
