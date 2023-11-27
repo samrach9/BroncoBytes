@@ -3,16 +3,17 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { TopBar } from "../components/topBar";
 import { Footer } from "../components/footer";
 import { UserContext } from "../App";
 import { AllUsersContext } from "../App";
 import getUserById from "../api/getUserById";
+import { FriendsList } from "../components/friendsList";
 
 export default function Friends() {
   const navigation = useNavigation();
@@ -23,14 +24,14 @@ export default function Friends() {
 
   useEffect(() => {
     async function getFriends() {
-      if (!("friends" in user) || !user.friends || user.friends.length == 0) {
-        setLoading(false);
-        return;
-      }
+      let currFriends = [];
       for (const friendId of user.friends) {
-        let friend = await getUserById(friendId, allUsers, setAllUsers);
-        setFriends([...friends, friend]);
+        const currFriend = await getUserById(friendId, allUsers, setAllUsers);
+        if (!currFriends.includes(currFriend)) {
+          currFriends.push(currFriend);
+        }
       }
+      setFriends(currFriends);
       setLoading(false);
     }
     getFriends();
@@ -60,24 +61,7 @@ export default function Friends() {
                 color="white"
               />
             ) : (
-              <View style={styles.friendsContainer}>
-                {friends.map((friend) => (
-                  <View key={friend.userId} style={styles.friendContainer}>
-                    {"photoUrl" in friend && friend.photoUrl ? (
-                      <Image
-                        source={{ uri: user.photoUrl }}
-                        style={styles.circle}
-                      />
-                    ) : (
-                      <Image
-                        source={require("../assets/defaultProfilePicture.png")}
-                        style={styles.circle}
-                      />
-                    )}
-                    <Text style={styles.friendText}>{friend.username}</Text>
-                  </View>
-                ))}
-              </View>
+              <FriendsList friends={friends} />
             )}
           </View>
         </ScrollView>
@@ -101,35 +85,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
   },
-  friendsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    margin: 15,
-    marginLeft: 25,
-    marginRight: 25,
-  },
-  friendContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-  },
   miscButtons: {
     flexDirection: "row",
     justifyContent: "space-between",
     margin: 15,
-  },
-  circle: {
-    borderRadius: 75,
-    borderColor: "black",
-    borderWidth: 2,
-    width: 150,
-    height: 150,
-    backgroundColor: "#D9D9D9",
-    marginBottom: 7,
-  },
-  friendText: {
-    color: "white",
-    fontFamily: "Bungee",
-    fontSize: 20,
   },
   miscText: {
     color: "white",

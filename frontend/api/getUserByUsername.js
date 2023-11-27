@@ -3,7 +3,7 @@ export default getUserByUsername = async (username, allUsers, setAllUsers) => {
     if(foundUser){
         console.debug("Found user in allUsers");
         console.log(foundUser)
-        return foundUser;
+        return {'user': foundUser};
     }
     let response = await fetch(
         'https://90nh29n5b7.execute-api.us-west-2.amazonaws.com/prod/getUser',

@@ -82,6 +82,8 @@ def lambda_handler(event, context):
             item['admin'] = {'BOOL': body['admin']}
         if 'photoUrl' in body:
             item['photoUrl'] = {'S': body['photoUrl']}
+        if 'friends' in body:
+            item['friends'] = {'L': [{'S': friend} for friend in body['friends']]}
     else:
         if email_taken(body['email'], db_client, DYNAMODB_TABLE):
             return email_already_exists_response
