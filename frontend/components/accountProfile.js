@@ -40,6 +40,12 @@ export function AccountProfile({ user: accountUser }) {
         });
   const lastActiveString =
     lastActiveDay + ", " + lastActiveDate.toLocaleTimeString();
+
+  let hasFriends = true;
+  if (user.friends == undefined){
+    hasFriends = false;
+  }
+    
   return (
     <View style={styles.userInformationContainer}>
       <View style={styles.profileIconContainer}>
@@ -58,7 +64,7 @@ export function AccountProfile({ user: accountUser }) {
         <Text style={styles.lastActiveText}>
           Last Active: {lastActiveString}
         </Text>
-        {!user.friends.includes(accountUser.userId) &&
+        {hasFriends &&
           <SmallRectangleButton text="Add Friend" onClick={() => handleAddFriend()} />
         }
       </View>
