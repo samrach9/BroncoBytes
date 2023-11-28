@@ -11,7 +11,7 @@ export function AccountProfile({ user: accountUser, personal }) {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    if (user.friends.includes(accountUser.userId)) {
+    if (personal || !('friends' in user) || !user.friends || user.friends.includes(accountUser.userId)) {
       setAdded(true);
     }
   }, []);
@@ -68,7 +68,7 @@ export function AccountProfile({ user: accountUser, personal }) {
         <Text style={styles.lastActiveText}>
           Last Active: {lastActiveString}
         </Text>
-        {!added && !personal &&
+        {!added &&
           <SmallRectangleButton text="Add Friend" onClick={() => handleAddFriend()} />
         }
       </View>

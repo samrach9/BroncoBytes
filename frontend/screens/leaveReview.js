@@ -141,10 +141,11 @@ export default function LeaveReview({ route }) {
         }));
 
         let updatedUser = user;
-        updatedUser['totalReviews'] = updatedUser['totalReviews'] + 1;
-        updatedUser['lastActive'] = Date.now() / 1000;
+        updatedUser.totalReviews = updatedUser.totalReviews + 1;
+        updatedUser.lastActive = Date.now() / 1000;
+        console.log(updatedUser);
 
-        await setUser({ updatedUser });
+        await setUser(updatedUser);
 
         navigation.navigate('Leave Review');
         alert("Review submitted!");
