@@ -25,7 +25,7 @@ export default function ReviewsPage({ route }) {
         <TopBar text={food.name} />
         <View style={styles.content}>
           {food.foodId == user.userId ? (
-            <AccountProfile user={user} />
+            <AccountProfile user={user} personal={true}/>
           ) : foundUser ? (
             <AccountProfile user={foundUser} />
           ) : food.foodId == "friends" ? (

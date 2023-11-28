@@ -6,7 +6,7 @@ import { SmallRectangleButton } from "./smallRectangleButton";
 import * as SecureStore from "expo-secure-store";
 import updateUser from "../api/updateUser";
 
-export function AccountProfile({ user: accountUser }) {
+export function AccountProfile({ user: accountUser, personal }) {
   const { user, setUser } = useContext(UserContext);
   const [added, setAdded] = useState(false);
 
@@ -68,7 +68,7 @@ export function AccountProfile({ user: accountUser }) {
         <Text style={styles.lastActiveText}>
           Last Active: {lastActiveString}
         </Text>
-        {!added &&
+        {!added && !personal &&
           <SmallRectangleButton text="Add Friend" onClick={() => handleAddFriend()} />
         }
       </View>
