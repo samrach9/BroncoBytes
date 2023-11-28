@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Image } from "expo-image";
 import { UserContext } from "../App";
@@ -8,6 +8,13 @@ import updateUser from "../api/updateUser";
 
 export function AccountProfile({ user: accountUser }) {
   const { user, setUser } = useContext(UserContext);
+  const [added, setAdded] = useState(false);
+
+  useEffect(() => {
+    if (user.friends.includes(accountUser.userId)) {
+      setAdded(true);
+    }
+  }, []);
   
   const handleAddFriend = async () => {
     const updatedFriends = [...user.friends, accountUser.userId];
@@ -16,9 +23,11 @@ export function AccountProfile({ user: accountUser }) {
     const result = await updateUser(updatedUser);
     if ("error" in result) {
       alert(result.error);
+      setAdded(false);
     } else {
       setUser(result.user);
       await SecureStore.setItemAsync("user", JSON.stringify(result.user));
+      setAdded(true);
     }
   };
 
@@ -41,11 +50,6 @@ export function AccountProfile({ user: accountUser }) {
   const lastActiveString =
     lastActiveDay + ", " + lastActiveDate.toLocaleTimeString();
 
-  let hasFriends = true;
-  if (user.friends == undefined){
-    hasFriends = false;
-  }
-    
   return (
     <View style={styles.userInformationContainer}>
       <View style={styles.profileIconContainer}>
@@ -64,7 +68,7 @@ export function AccountProfile({ user: accountUser }) {
         <Text style={styles.lastActiveText}>
           Last Active: {lastActiveString}
         </Text>
-        {hasFriends &&
+        {!added &&
           <SmallRectangleButton text="Add Friend" onClick={() => handleAddFriend()} />
         }
       </View>

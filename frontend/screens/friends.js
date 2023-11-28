@@ -24,6 +24,11 @@ export default function Friends() {
 
   useEffect(() => {
     async function getFriends() {
+      if (!('friends' in user) || user.friends == undefined) {
+        setUser({ ...user, friends: [] });
+        setLoading(false);
+        return;
+      }
       let currFriends = [];
       for (const friendId of user.friends) {
         const currFriend = await getUserById(friendId, allUsers, setAllUsers);
