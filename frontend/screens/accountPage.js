@@ -310,7 +310,7 @@ export default function AccountPage() {
         // Container
         <View style={styles.container}>
             <View style={styles.contentContainer}>
-                <AccountProfile user={user}/>
+                <AccountProfile user={user} personal={true}/>
                 <View style={styles.buttonContainer}>
                     <BigRectangleButton text='Change Name' onClick={() => setChangeNameModalVisible(true)} />
                     <ChangeNameModal />
@@ -371,6 +371,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: 'white',
         textAlign: 'center',
+        marginTop: 10
     },
     buttonContainer: {
         flex: 1,
