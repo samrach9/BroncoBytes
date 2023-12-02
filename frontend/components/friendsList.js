@@ -59,15 +59,17 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25,
     alignSelf: "flex-start",
+    flexWrap: "wrap",
   },
   friendContainer: {
     flexDirection: "column",
+    width: "48%",
     alignItems: "center",
-    padding: 25,
+    padding: 20,
   },
   circle: {
-    width: 125,
-    height: 125,
+    width: "100%",
+    aspectRatio: 1,
     borderRadius: 75,
     backgroundColor: "#B30738",
     borderColor: "black",
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-
+    minWidth: "48%",
   },
   friendText: {
     fontFamily: "Bungee",
